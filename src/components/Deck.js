@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import Question from "./Question";
+import { useNavigate, useParams } from "react-router";
+import Question from "./question/Question";
+import Button from "@mui/material/Button";
 
 function Deck() {
   const { id } = useParams();
-  const deck = useSelector((state) => state.deck.find((deck) => deck.id == id));
+  const fetchedDeck = useSelector((state) =>
+    state.deck.find((deck) => deck.id == id)
+  );
+  const [deck, setDeck] = useState(fetchedDeck);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   let idx = 0;
+
+  useEffect(() => {
+    setDeck(fetchedDeck);
+  }, [fetchedDeck]);
+
+  const updateQuestion = (updatedQuestion) => {
+    setDeck({
+      ...deck,
+      questions: deck.questions.map((question) =>
+        question.id === updatedQuestion.id ? updatedQuestion : question
+      ),
+    });
+  };
+
+  const handleOnclick = () => {};
 
   return (
     <div>
@@ -14,8 +35,19 @@ function Deck() {
       {deck == null ? (
         <h2>Loading</h2>
       ) : (
-        <Question question={deck.questions[idx]} deckId={id} />
+        <Question
+          question={deck.questions[idx]}
+          deckId={id}
+          updateQuestion={updateQuestion}
+        />
       )}
+      <Button
+        onClick={() => navigate("/")}
+        sx={{ mt: 1, mr: 1 }}
+        variant="outlined"
+      >
+        END TEST
+      </Button>
     </div>
   );
 }
