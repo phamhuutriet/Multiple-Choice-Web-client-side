@@ -2,6 +2,7 @@ import {
   FETCH_ALL_DECKS,
   UPDATE_DECK_REDUX,
   UPDATE_PRIORITY_SCORE,
+  CREATE_NEW_DECK,
 } from "../actions/actionTypes";
 
 export default (decks = [], action) => {
@@ -20,6 +21,8 @@ export default (decks = [], action) => {
       var deckId = action.payloads.deckId;
       var updatedDeck = action.payloads.deck;
       return decks.map((deck) => (deck.id == deckId ? updatedDeck : deck));
+    case CREATE_NEW_DECK:
+      return [...decks, action.payloads];
     default:
       return decks;
   }

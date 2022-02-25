@@ -1,5 +1,9 @@
 import * as api from "../../api/index";
-import { FETCH_ALL_DECKS, UPDATE_PRIORITY_SCORE } from "./actionTypes";
+import {
+  CREATE_NEW_DECK,
+  FETCH_ALL_DECKS,
+  UPDATE_PRIORITY_SCORE,
+} from "./actionTypes";
 
 export const fetchAllDeck = () => async (dispatch) => {
   try {
@@ -22,3 +26,12 @@ export const updatePriorityScore =
       console.log(err.message);
     }
   };
+
+export const createNewDeck = (newDeck) => async (dispatch) => {
+  try {
+    const { data } = await api.createNewDeck(newDeck);
+    dispatch({ type: CREATE_NEW_DECK, payloads: data });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
