@@ -54,7 +54,7 @@ function Deck() {
         />
       )}
 
-      {deck == null ? null : (
+      {/* {deck == null ? null : (
         <Button
           onClick={() => setIndex()}
           sx={{ mt: 1, mr: 1 }}
@@ -62,7 +62,7 @@ function Deck() {
         >
           NEXT QUESTION
         </Button>
-      )}
+      )} */}
 
       {deck != null && idx == deck.questions.length - 1 ? (
         <Button
