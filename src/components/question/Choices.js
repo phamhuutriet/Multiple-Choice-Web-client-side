@@ -7,7 +7,12 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
 
-export default function Choices({ choices, description, setPriority }) {
+export default function Choices({
+  choices,
+  description,
+  setPriority,
+  setIndex,
+}) {
   const [value, setValue] = React.useState("");
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState("Choose wisely");

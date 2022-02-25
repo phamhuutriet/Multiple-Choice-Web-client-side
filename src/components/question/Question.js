@@ -5,10 +5,16 @@ import { useNavigate } from "react-router";
 import { updatePriorityScore } from "../../redux/actions/actions";
 import Choices from "./Choices";
 
-function Question({ question, deckId, updateQuestion }) {
+function Question({ question, deckId, updateQuestion, setIndex }) {
   const [thisQuestion, setQuestion] = useState(question);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    updateQuestion(thisQuestion);
+  }, [thisQuestion]);
+
+  useEffect(() => {
+    setQuestion(question);
+  }, [question]);
 
   const setPriority = (sign) => {
     if (sign == "true") {
@@ -16,22 +22,13 @@ function Question({ question, deckId, updateQuestion }) {
         ...thisQuestion,
         priorityScore: thisQuestion.priorityScore - 1,
       });
-      updateQuestion(thisQuestion);
     } else {
       setQuestion({
         ...thisQuestion,
         priorityScore: thisQuestion.priorityScore + 1,
       });
-      updateQuestion(thisQuestion);
     }
   };
-
-  const onSubmit = (e) => {
-    dispatch(updatePriorityScore(thisQuestion, deckId));
-    navigate("/");
-  };
-
-  console.log(thisQuestion);
 
   return (
     <div>
@@ -40,6 +37,7 @@ function Question({ question, deckId, updateQuestion }) {
         choices={thisQuestion.choices}
         description={thisQuestion.description}
         setPriority={setPriority}
+        setIndex={setIndex}
       />
     </div>
   );

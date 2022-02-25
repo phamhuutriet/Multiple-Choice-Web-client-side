@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import Question from "./question/Question";
 import Button from "@mui/material/Button";
+import { updatePriorityScore } from "../redux/actions/actions";
 
 function Deck() {
   const { id } = useParams();
@@ -12,7 +13,7 @@ function Deck() {
   const [deck, setDeck] = useState(fetchedDeck);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  let idx = 0;
+  const [idx, setIdx] = useState(0);
 
   useEffect(() => {
     setDeck(fetchedDeck);
@@ -27,7 +28,17 @@ function Deck() {
     });
   };
 
-  const handleOnclick = () => {};
+  const handleOnClick = () => {
+    for (const question of deck.questions) {
+      console.log(question);
+      dispatch(updatePriorityScore(question, id));
+    }
+    navigate("/");
+  };
+
+  const setIndex = () => {
+    setIdx(Math.min(idx + 1, deck.questions.length - 1));
+  };
 
   return (
     <div>
@@ -39,15 +50,29 @@ function Deck() {
           question={deck.questions[idx]}
           deckId={id}
           updateQuestion={updateQuestion}
+          setIndex={setIndex}
         />
       )}
-      <Button
-        onClick={() => navigate("/")}
-        sx={{ mt: 1, mr: 1 }}
-        variant="outlined"
-      >
-        END TEST
-      </Button>
+
+      {deck == null ? null : (
+        <Button
+          onClick={() => setIndex()}
+          sx={{ mt: 1, mr: 1 }}
+          variant="outlined"
+        >
+          NEXT QUESTION
+        </Button>
+      )}
+
+      {deck != null && idx == deck.questions.length - 1 ? (
+        <Button
+          onClick={() => handleOnClick()}
+          sx={{ mt: 1, mr: 1 }}
+          variant="outlined"
+        >
+          END TEST
+        </Button>
+      ) : null}
     </div>
   );
 }
