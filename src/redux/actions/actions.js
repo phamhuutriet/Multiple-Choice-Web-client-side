@@ -13,9 +13,7 @@ export const fetchAllDeck = () => async (dispatch) => {
 export const updatePriorityScore =
   (updatedQuestion, deckId) => async (dispatch) => {
     try {
-      console.log("updatedQuestion: ", updatedQuestion);
       const { data } = await api.updatePriorityScore(updatedQuestion);
-      console.log(data);
       dispatch({
         type: UPDATE_PRIORITY_SCORE,
         payloads: { data: data, deckId: deckId },

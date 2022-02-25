@@ -1,15 +1,14 @@
-import { Button } from "@mui/material";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
 import { updatePriorityScore } from "../../redux/actions/actions";
 import Choices from "./Choices";
 
-function Question({ question, deckId, updateQuestion, setIndex }) {
+function Question({ question, deckId, setIndex }) {
   const [thisQuestion, setQuestion] = useState(question);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    updateQuestion(thisQuestion);
+    dispatch(updatePriorityScore(thisQuestion, deckId));
   }, [thisQuestion]);
 
   useEffect(() => {

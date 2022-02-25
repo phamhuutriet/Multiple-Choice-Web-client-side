@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import Question from "./question/Question";
 import Button from "@mui/material/Button";
-import { updatePriorityScore } from "../redux/actions/actions";
 
 function Deck() {
   const { id } = useParams();
@@ -19,52 +18,31 @@ function Deck() {
     setDeck(fetchedDeck);
   }, [fetchedDeck]);
 
-  const updateQuestion = (updatedQuestion) => {
-    setDeck({
-      ...deck,
-      questions: deck.questions.map((question) =>
-        question.id === updatedQuestion.id ? updatedQuestion : question
-      ),
-    });
-  };
-
-  const handleOnClick = () => {
-    for (const question of deck.questions) {
-      console.log(question);
-      dispatch(updatePriorityScore(question, id));
-    }
+  const handleOnClick = async () => {
     navigate("/");
   };
 
   const setIndex = () => {
-    setIdx(Math.min(idx + 1, deck.questions.length - 1));
+    setIdx(Math.min(idx + 1, deck.questions.length));
   };
 
   return (
-    <div>
-      <h1>Deck number {id} </h1>
+    <div style={{ textAlign: "center" }}>
+      {deck == null ? <h1>LOADING DECK</h1> : <h1>{deck.name}</h1>}
+
       {deck == null ? (
         <h2>Loading</h2>
+      ) : idx == deck.questions.length ? (
+        <h2>You've finished all the cards</h2>
       ) : (
         <Question
           question={deck.questions[idx]}
           deckId={id}
-          updateQuestion={updateQuestion}
           setIndex={setIndex}
         />
       )}
 
-      {/* {deck == null ? null : (
-        <Button
-          onClick={() => setIndex()}
-          sx={{ mt: 1, mr: 1 }}
-          variant="outlined"
-        >
-          NEXT QUESTION
-        </Button>
-      )} */}
-
-      {deck != null && idx == deck.questions.length - 1 ? (
+      {deck != null && idx == deck.questions.length ? (
         <Button
           onClick={() => handleOnClick()}
           sx={{ mt: 1, mr: 1 }}

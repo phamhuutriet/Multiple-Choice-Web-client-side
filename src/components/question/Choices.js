@@ -44,7 +44,6 @@ export default function Choices({
   return (
     <form onSubmit={handleSubmit}>
       <FormControl sx={{ m: 3 }} error={error} variant="standard">
-        <FormLabel id="demo-error-radios">{description}</FormLabel>
         <RadioGroup
           aria-labelledby="demo-error-radios"
           name="quiz"
