@@ -42,6 +42,16 @@ function Deck() {
         />
       )}
 
+      {deck == null || idx == deck.questions.length ? null : (
+        <Button
+          onClick={() => setIndex()}
+          sx={{ mt: 1, mr: 1 }}
+          variant="outlined"
+        >
+          NEXT
+        </Button>
+      )}
+
       {deck != null && idx == deck.questions.length ? (
         <Button
           onClick={() => handleOnClick()}

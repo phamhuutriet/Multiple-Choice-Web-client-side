@@ -29,12 +29,12 @@ export default function Choices({
       setPriority("true");
       setHelperText("You got it!");
       setError(false);
-      setIndex();
+      // setIndex();
     } else if (value.slice(0, 5) === "false") {
       setPriority("false");
       setHelperText("Sorry, wrong answer!");
       setError(true);
-      setIndex();
+      // setIndex();
     } else {
       setHelperText("Please select an option.");
       setError(true);
