@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Answer from "./Answer";
 import Description from "./Description";
@@ -8,8 +8,19 @@ import Button from "@mui/material/Button";
 export default function AddQuestion() {
   const [description, setDescription] = useState("");
   const [numAnswer, setNumAnswer] = React.useState(0);
+  const [choices, setChoices] = useState([]);
 
-  console.log(description);
+  useEffect(() => {
+    setChoices((prev) => [...Array(numAnswer)]);
+  }, [numAnswer]);
+
+  const updateChoice = (idx, updatedChoice) => {
+    setChoices((prev) =>
+      choices.map((choice, i) => (i == idx ? updatedChoice : choice))
+    );
+  };
+
+  console.log(choices);
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -21,9 +32,9 @@ export default function AddQuestion() {
         <NumAnswerSelect numAnswer={numAnswer} setNumAnswer={setNumAnswer} />
       </div>
 
-      {[...Array(numAnswer)].map((e, i) => (
+      {choices.map((e, i) => (
         <div key={i}>
-          <Answer />
+          <Answer updateChoice={updateChoice} idx={i} />
           <br />
         </div>
       ))}
