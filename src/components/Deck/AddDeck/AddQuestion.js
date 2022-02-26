@@ -9,14 +9,36 @@ export default function AddQuestion() {
   const [description, setDescription] = useState("");
   const [numAnswer, setNumAnswer] = React.useState(0);
   const [choices, setChoices] = useState([]);
+  const [answerIdx, setAnswerIdx] = useState(null);
 
   useEffect(() => {
-    setChoices((prev) => [...Array(numAnswer)]);
+    if (numAnswer <= choices.length) {
+      setChoices((prev) => choices.slice(0, numAnswer));
+    } else if (choices.length == 0) {
+      setChoices((prev) => [...Array(numAnswer)]);
+    } else {
+      const addArray = [...Array(numAnswer - choices.length)];
+      setChoices((prev) => choices.concat(addArray));
+    }
   }, [numAnswer]);
+
+  useEffect(() => {
+    updateAnswerIndex(answerIdx);
+  }, [answerIdx]);
 
   const updateChoice = (idx, updatedChoice) => {
     setChoices((prev) =>
       choices.map((choice, i) => (i == idx ? updatedChoice : choice))
+    );
+  };
+
+  const updateAnswerIndex = (idx) => {
+    setChoices((prev) =>
+      choices.map((choice, i) =>
+        i == idx
+          ? { ...choice, isAnswer: true }
+          : { ...choice, isAnswer: false }
+      )
     );
   };
 
@@ -34,7 +56,11 @@ export default function AddQuestion() {
 
       {choices.map((e, i) => (
         <div key={i}>
-          <Answer updateChoice={updateChoice} idx={i} />
+          <Answer
+            updateChoice={updateChoice}
+            idx={i}
+            setAnswerIdx={setAnswerIdx}
+          />
           <br />
         </div>
       ))}
