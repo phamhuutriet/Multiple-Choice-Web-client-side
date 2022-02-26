@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import PopUpNewDeck from "./PopUpNewDeck";
+import PopUpNewDeck from "../PopUpNewDeck";
 
 function AllDeck() {
   const decks = useSelector((state) => state.deck);

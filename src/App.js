@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AllDeck from "./components/AllDeck";
-import Deck from "./components/Deck";
+import AddQuestion from "./components/Deck/AddDeck/AddQuestion";
+import AllDeck from "./components/Deck/AllDeck";
+import LearnDeck from "./components/Deck/Deck";
+import DeckHome from "./components/Deck/DeckHome";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
-import Demo2 from "./components/Test";
 import { fetchAllDeck } from "./redux/actions/actions";
 
 function App() {
@@ -38,11 +39,31 @@ function App() {
             }
           />
           <Route
+            path="/decks/:id/learn"
+            element={
+              <div>
+                <NavBar />
+                <LearnDeck />
+              </div>
+            }
+          />
+          <Route
             path="/decks/:id"
             element={
               <div>
                 <NavBar />
-                <Deck />
+                <div style={{ textAlign: "center" }}>
+                  <DeckHome />
+                </div>
+              </div>
+            }
+          />
+          <Route
+            path="/decks/:id/addCard"
+            element={
+              <div>
+                <NavBar />
+                <AddQuestion />
               </div>
             }
           />
