@@ -11,7 +11,6 @@ function LearnDeck() {
   );
   const [deck, setDeck] = useState(fetchedDeck);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {

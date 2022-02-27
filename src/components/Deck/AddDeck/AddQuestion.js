@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { addQuestionToDeck } from "../../../redux/actions/actions";
+import FormHelperText from "@mui/material/FormHelperText";
 
 export default function AddQuestion() {
   const { id } = useParams();
@@ -14,6 +15,7 @@ export default function AddQuestion() {
   const [numAnswer, setNumAnswer] = useState(0);
   const [choices, setChoices] = useState([]);
   const [answerIdx, setAnswerIdx] = useState(null);
+  const [helperText, setHelperText] = React.useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,8 +50,15 @@ export default function AddQuestion() {
   };
 
   const addCardToDeck = () => {
-    const newQuestion = { description: description, choices: choices };
-    dispatch(addQuestionToDeck(newQuestion, id));
+    if (answerIdx != null) {
+      console.log("will dispatch");
+      const newQuestion = { description: description, choices: choices };
+      dispatch(addQuestionToDeck(newQuestion, id));
+      setHelperText((prev) => "");
+    } else {
+      console.log("no dispatch");
+      setHelperText((prev) => "Please set the answer before submitting");
+    }
   };
 
   console.log(choices);
@@ -83,6 +92,10 @@ export default function AddQuestion() {
       >
         SUBMIT
       </Button>
+
+      <FormHelperText style={{ textAlign: "center", color: "red" }}>
+        {helperText}
+      </FormHelperText>
     </div>
   );
 }
