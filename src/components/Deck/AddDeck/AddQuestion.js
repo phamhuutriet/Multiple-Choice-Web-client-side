@@ -54,9 +54,10 @@ export default function AddQuestion() {
         <NumAnswerSelect numAnswer={numAnswer} setNumAnswer={setNumAnswer} />
       </div>
 
-      {choices.map((e, i) => (
+      {choices.map((choice, i) => (
         <div key={i}>
           <Answer
+            isAnswer={i == answerIdx}
             updateChoice={updateChoice}
             idx={i}
             setAnswerIdx={setAnswerIdx}

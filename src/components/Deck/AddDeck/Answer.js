@@ -4,18 +4,37 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
-export default function Answer({ updateChoice, idx }) {
-  const [choice, setChoice] = useState({ body: "", isAnswer: false });
+const isAnswerColor = "green";
+const notAnswerColor = "red";
+
+export default function Answer({ isAnswer, updateChoice, idx, setAnswerIdx }) {
+  const [choice, setChoice] = useState({ body: "", isAnswer: isAnswer });
+  const [buttonColor, setButtonColor] = useState(notAnswerColor);
 
   useEffect(() => {
     updateChoice(idx, choice);
-  }, [choice]);
+  }, [choice.body]);
+
+  useEffect(() => {
+    console.log(`use effect ${choice.body} color`);
+    setButtonColor((prev) => (isAnswer ? isAnswerColor : notAnswerColor));
+  });
 
   const onChangeBody = (e) => {
     setChoice((prev) => ({
       ...choice,
       body: e.target.value,
     }));
+  };
+
+  console.log(isAnswer);
+
+  const onClickIsAnswer = () => {
+    setChoice((prev) => ({
+      ...choice,
+      isAnswer: true,
+    }));
+    setAnswerIdx((prev) => idx);
   };
 
   return (
@@ -27,7 +46,11 @@ export default function Answer({ updateChoice, idx }) {
           placeholder="Please enter answer"
         />
       </FormControl>
-      <Button sx={{ mt: 1, mr: 1 }} variant="outlined">
+      <Button
+        onClick={() => onClickIsAnswer()}
+        sx={{ mt: 1, mr: 1, color: buttonColor }}
+        variant="outlined"
+      >
         IS ANSWER
       </Button>
     </Box>
