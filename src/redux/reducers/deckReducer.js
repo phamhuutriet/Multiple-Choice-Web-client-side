@@ -3,6 +3,7 @@ import {
   UPDATE_DECK_REDUX,
   UPDATE_PRIORITY_SCORE,
   CREATE_NEW_DECK,
+  ADD_QUESTION,
 } from "../actions/actionTypes";
 
 export default (decks = [], action) => {
@@ -23,6 +24,13 @@ export default (decks = [], action) => {
       return decks.map((deck) => (deck.id == deckId ? updatedDeck : deck));
     case CREATE_NEW_DECK:
       return [...decks, action.payloads];
+    case ADD_QUESTION:
+      var updatedDeck = decks.find((deck) => deck.id == action.deckId);
+      updatedDeck.questions = [...updatedDeck.questions, action.payloads];
+      console.log("Reducer updated deck: ", updatedDeck);
+      return decks.map((deck) =>
+        deck.id == updatedDeck.id ? updatedDeck : deck
+      );
     default:
       return decks;
   }

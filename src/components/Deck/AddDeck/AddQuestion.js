@@ -4,12 +4,17 @@ import Answer from "./Answer";
 import Description from "./Description";
 import NumAnswerSelect from "./NumAnswerSelect";
 import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router";
+import { addQuestionToDeck } from "../../../redux/actions/actions";
 
 export default function AddQuestion() {
+  const { id } = useParams();
   const [description, setDescription] = useState("");
   const [numAnswer, setNumAnswer] = React.useState(0);
   const [choices, setChoices] = useState([]);
   const [answerIdx, setAnswerIdx] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (numAnswer <= choices.length) {
@@ -42,6 +47,11 @@ export default function AddQuestion() {
     );
   };
 
+  const addCardToDeck = () => {
+    const newQuestion = { description: description, choices: choices };
+    dispatch(addQuestionToDeck(newQuestion, id));
+  };
+
   console.log(choices);
 
   return (
@@ -66,7 +76,11 @@ export default function AddQuestion() {
         </div>
       ))}
 
-      <Button sx={{ mt: 1, mr: 1 }} variant="outlined">
+      <Button
+        onClick={() => addCardToDeck()}
+        sx={{ mt: 1, mr: 1 }}
+        variant="outlined"
+      >
         SUBMIT
       </Button>
     </div>
