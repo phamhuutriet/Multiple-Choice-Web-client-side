@@ -27,7 +27,6 @@ export default (decks = [], action) => {
     case ADD_QUESTION:
       var updatedDeck = decks.find((deck) => deck.id == action.deckId);
       updatedDeck.questions = [...updatedDeck.questions, action.payloads];
-      console.log("Reducer updated deck: ", updatedDeck);
       return decks.map((deck) =>
         deck.id == updatedDeck.id ? updatedDeck : deck
       );

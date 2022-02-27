@@ -39,10 +39,8 @@ export const createNewDeck = (newDeck) => async (dispatch) => {
 
 export const addQuestionToDeck = (newQuestion, deckId) => async (dispatch) => {
   try {
-    console.log("before api");
     const { data } = await api.addQuestionToDeck(newQuestion, deckId);
     dispatch({ type: ADD_QUESTION, payloads: data, deckId: deckId });
-    console.log("after api");
   } catch (err) {
     console.log(err.message);
   }

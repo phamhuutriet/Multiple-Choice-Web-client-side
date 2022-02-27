@@ -9,15 +9,24 @@ import { useParams } from "react-router";
 import { addQuestionToDeck } from "../../../redux/actions/actions";
 import FormHelperText from "@mui/material/FormHelperText";
 
+// CONSTANTS
+const initDescription = "";
+const initNumAnswer = 0;
+const initChoices = [];
+const initAnswerIdx = null;
+const initHelperText = "";
+
 export default function AddQuestion() {
+  // INSTANCES
   const { id } = useParams();
-  const [description, setDescription] = useState("");
-  const [numAnswer, setNumAnswer] = useState(0);
-  const [choices, setChoices] = useState([]);
-  const [answerIdx, setAnswerIdx] = useState(null);
-  const [helperText, setHelperText] = React.useState("");
+  const [description, setDescription] = useState(initDescription);
+  const [numAnswer, setNumAnswer] = useState(initNumAnswer);
+  const [choices, setChoices] = useState(initChoices);
+  const [answerIdx, setAnswerIdx] = useState(initAnswerIdx);
+  const [helperText, setHelperText] = React.useState(initHelperText);
   const dispatch = useDispatch();
 
+  // USE EFFECTS SITE
   useEffect(() => {
     if (numAnswer <= choices.length) {
       setChoices((prev) => choices.slice(0, numAnswer));
@@ -33,6 +42,7 @@ export default function AddQuestion() {
     updateAnswerIndex(answerIdx);
   }, [answerIdx]);
 
+  // METHODS
   const updateChoice = (idx, updatedChoice) => {
     setChoices((prev) =>
       choices.map((choice, i) => (i == idx ? updatedChoice : choice))
@@ -49,24 +59,42 @@ export default function AddQuestion() {
     );
   };
 
+  const resetDefault = () => {
+    setDescription((prev) => initDescription);
+    setChoices((prev) => initChoices);
+    setNumAnswer((prev) => initNumAnswer);
+    setAnswerIdx((prev) => initAnswerIdx);
+    setHelperText((prev) => initHelperText);
+  };
+
   const addCardToDeck = () => {
     if (answerIdx != null) {
-      console.log("will dispatch");
-      const newQuestion = { description: description, choices: choices };
-      dispatch(addQuestionToDeck(newQuestion, id));
-      setHelperText((prev) => "");
+      if (!isChoiceBodyCollided()) {
+        const newQuestion = { description: description, choices: choices };
+        dispatch(addQuestionToDeck(newQuestion, id));
+        setHelperText((prev) => "");
+        resetDefault();
+      } else {
+        setHelperText((prev) => "Answers' bodies collided");
+      }
     } else {
-      console.log("no dispatch");
       setHelperText((prev) => "Please set the answer before submitting");
     }
   };
 
-  console.log(choices);
+  const isChoiceBodyCollided = () => {
+    const updatedMap = new Set();
+    choices.forEach((choice) => updatedMap.add(choice.body));
+    return updatedMap.size < choices.length;
+  };
 
   return (
     <div style={{ textAlign: "center" }}>
       <h2>Add Question</h2>
-      <Description setDescription={setDescription} description={description} />
+      <Description
+        setParentDescription={setDescription}
+        description={description}
+      />
 
       <div>
         <h4> Number of Answers </h4>
