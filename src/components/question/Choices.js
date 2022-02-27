@@ -7,12 +7,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
 
-export default function Choices({
-  choices,
-  description,
-  setPriority,
-  setIndex,
-}) {
+export default function Choices({ choices, setPriority }) {
   const [value, setValue] = React.useState("");
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState("Choose wisely");
@@ -50,26 +45,16 @@ export default function Choices({
           value={value}
           onChange={handleRadioChange}
         >
-          <FormControlLabel
-            value={choices[0].isAnswer + choices[0].id.toString()}
-            control={<Radio />}
-            label={choices[0].body}
-          />
-          <FormControlLabel
-            value={choices[1].isAnswer + choices[1].id.toString()}
-            control={<Radio />}
-            label={choices[1].body}
-          />
-          <FormControlLabel
-            value={choices[2].isAnswer + choices[2].id.toString()}
-            control={<Radio />}
-            label={choices[2].body}
-          />
-          <FormControlLabel
-            value={choices[3].isAnswer + choices[3].id.toString()}
-            control={<Radio />}
-            label={choices[3].body}
-          />
+          {choices.map((choice, idx) => {
+            return (
+              <FormControlLabel
+                key={idx}
+                value={choice.isAnswer + choice.id.toString()}
+                control={<Radio />}
+                label={choice.body}
+              />
+            );
+          })}
         </RadioGroup>
         <FormHelperText>{helperText}</FormHelperText>
         <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined">

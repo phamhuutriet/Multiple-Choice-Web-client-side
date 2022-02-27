@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { updatePriorityScore } from "../../redux/actions/actions";
 import Choices from "./Choices";
 
-function Question({ question, deckId, setIndex }) {
+function Question({ question, deckId }) {
   const [thisQuestion, setQuestion] = useState(question);
   const dispatch = useDispatch();
 
@@ -32,12 +32,7 @@ function Question({ question, deckId, setIndex }) {
   return (
     <div>
       <h3>{thisQuestion.description}</h3>
-      <Choices
-        choices={thisQuestion.choices}
-        description={thisQuestion.description}
-        setPriority={setPriority}
-        setIndex={setIndex}
-      />
+      <Choices choices={thisQuestion.choices} setPriority={setPriority} />
     </div>
   );
 }

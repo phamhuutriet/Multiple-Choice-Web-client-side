@@ -35,11 +35,7 @@ function LearnDeck() {
       ) : idx == deck.questions.length ? (
         <h2>You've finished all the cards</h2>
       ) : (
-        <Question
-          question={deck.questions[idx]}
-          deckId={id}
-          setIndex={setIndex}
-        />
+        <Question question={deck.questions[idx]} deckId={id} />
       )}
 
       {deck == null || idx == deck.questions.length ? null : (

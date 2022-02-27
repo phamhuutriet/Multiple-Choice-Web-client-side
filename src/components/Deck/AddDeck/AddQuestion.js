@@ -11,7 +11,7 @@ import { addQuestionToDeck } from "../../../redux/actions/actions";
 export default function AddQuestion() {
   const { id } = useParams();
   const [description, setDescription] = useState("");
-  const [numAnswer, setNumAnswer] = React.useState(0);
+  const [numAnswer, setNumAnswer] = useState(0);
   const [choices, setChoices] = useState([]);
   const [answerIdx, setAnswerIdx] = useState(null);
   const dispatch = useDispatch();
