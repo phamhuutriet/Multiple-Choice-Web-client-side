@@ -9,3 +9,8 @@ export const updatePriorityScore = (updatedQuestion) =>
 export const createNewDeck = (deck) => axios.post(DECKS_URL, deck);
 export const addQuestionToDeck = (newQuestion, deckId) =>
   axios.post(DECKS_URL + `/${deckId}/questions`, newQuestion);
+export const fetchDeckQuestionById = (deckId, shuffleQuestion, shuffleChoice) =>
+  axios.get(
+    DECKS_URL +
+      `/${deckId}/questions/?shuffleQuestion=${shuffleQuestion}&shuffleChoice=${shuffleChoice}`
+  );

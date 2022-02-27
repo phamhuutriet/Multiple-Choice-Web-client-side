@@ -7,7 +7,7 @@ function DeckHome() {
   const navigate = useNavigate();
 
   const navigateLearn = () => {
-    navigate(`/decks/${id}/learn`);
+    navigate(`/decks/${id}/learn/noredux`);
   };
 
   const navigateAddCard = () => {

@@ -97,7 +97,7 @@ export default function AddQuestion() {
       />
 
       <div>
-        <h4> Number of Answers </h4>
+        <h3> Number of Answers </h3>
         <NumAnswerSelect numAnswer={numAnswer} setNumAnswer={setNumAnswer} />
       </div>
 

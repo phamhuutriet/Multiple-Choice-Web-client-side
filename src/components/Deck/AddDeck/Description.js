@@ -11,7 +11,7 @@ export default function Description({ description, setParentDescription }) {
   return (
     <Box component="form" noValidate autoComplete="off">
       <FormControl sx={{ width: "50ch", marginTop: 10 }}>
-        <h4>Description</h4>
+        <h3>Description</h3>
         <OutlinedInput
           value={description}
           onChange={onChangeDesc}

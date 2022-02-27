@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import Question from "../question/Question";
+import Question from "../../question/Question";
 import Button from "@mui/material/Button";
 
-function LearnDeck() {
+function LearnDeck({ shuffleQuestion, shuffleChoice }) {
   const { id } = useParams();
   const fetchedDeck = useSelector((state) =>
     state.deck.find((deck) => deck.id == id)
