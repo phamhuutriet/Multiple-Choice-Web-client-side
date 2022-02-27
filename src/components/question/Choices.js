@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -6,10 +6,33 @@ import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
 
-export default function Choices({ choices, setPriority }) {
-  const [value, setValue] = React.useState("");
-  const [error, setError] = React.useState(false);
-  const [helperText, setHelperText] = React.useState("Choose wisely");
+const initValue = "";
+const initError = false;
+const initHelperText = "Choose wisely";
+const initIsComplete = false;
+const initDisableButton = false;
+
+export default function Choices({
+  choices,
+  setPriority,
+  setCompleteQuestions,
+  questionIdx,
+  inCompletedSet,
+  setIndex,
+}) {
+  const [value, setValue] = useState("");
+  const [error, setError] = useState(false);
+  const [helperText, setHelperText] = useState("Choose wisely");
+  const [isComplete, setIsComplete] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
+
+  useEffect(() => {
+    if (!inCompletedSet(questionIdx)) {
+      resetDefault();
+    } else {
+      handleComplete();
+    }
+  }, [questionIdx]);
 
   const handleRadioChange = (event) => {
     setValue(event.target.value);
@@ -23,16 +46,34 @@ export default function Choices({ choices, setPriority }) {
       setPriority("true");
       setHelperText("You got it!");
       setError(false);
-      // setIndex();
+      handleComplete();
     } else if (value.slice(0, 5) === "false") {
       setPriority("false");
       setHelperText("Sorry, wrong answer!");
       setError(true);
-      // setIndex();
+      handleComplete();
     } else {
       setHelperText("Please select an option.");
       setError(true);
     }
+  };
+
+  const handleComplete = () => {
+    setIsComplete((prev) => true);
+    setDisableButton((prev) => true);
+    setCompleteQuestions((prev) => {
+      const newSet = new Set(prev);
+      newSet.add(questionIdx);
+      return newSet;
+    });
+  };
+
+  const resetDefault = () => {
+    setValue((prev) => initValue);
+    setError((prev) => initError);
+    setHelperText((prev) => initHelperText);
+    setIsComplete((prev) => initIsComplete);
+    setDisableButton((prev) => initDisableButton);
   };
 
   return (
@@ -51,14 +92,26 @@ export default function Choices({ choices, setPriority }) {
                 value={choice.isAnswer + choice.id.toString()}
                 control={<Radio />}
                 label={choice.body}
+                disabled={disableButton}
               />
             );
           })}
         </RadioGroup>
         <FormHelperText>{helperText}</FormHelperText>
-        <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined">
-          Check Answer
-        </Button>
+
+        {isComplete ? (
+          <Button
+            onClick={() => setIndex("asc")}
+            sx={{ mt: 1, mr: 1 }}
+            variant="outlined"
+          >
+            NEXT
+          </Button>
+        ) : (
+          <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined">
+            Check Answer
+          </Button>
+        )}
       </FormControl>
     </form>
   );

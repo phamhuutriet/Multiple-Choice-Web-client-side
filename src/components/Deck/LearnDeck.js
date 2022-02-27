@@ -12,6 +12,7 @@ function LearnDeck() {
   const [deck, setDeck] = useState(fetchedDeck);
   const navigate = useNavigate();
   const [idx, setIdx] = useState(0);
+  const [completeQuestions, setCompleteQuestions] = useState(new Set());
 
   useEffect(() => {
     setDeck(fetchedDeck);
@@ -21,8 +22,16 @@ function LearnDeck() {
     navigate(`/decks/${id}`);
   };
 
-  const setIndex = () => {
-    setIdx(Math.min(idx + 1, deck.questions.length));
+  const setIndex = (sign) => {
+    if (sign == "asc") {
+      setIdx(Math.min(idx + 1, deck.questions.length));
+    } else if (sign == "desc") {
+      setIdx((idx - 1 + deck.questions.length) % deck.questions.length);
+    }
+  };
+
+  const inCompletedSet = (questionIdx) => {
+    return completeQuestions.has(questionIdx);
   };
 
   return (
@@ -34,18 +43,34 @@ function LearnDeck() {
       ) : idx == deck.questions.length ? (
         <h2>You've finished all the cards</h2>
       ) : (
-        <Question question={deck.questions[idx]} deckId={id} />
+        <Question
+          question={deck.questions[idx]}
+          deckId={id}
+          setCompleteQuestions={setCompleteQuestions}
+          questionIdx={idx}
+          inCompletedSet={inCompletedSet}
+          setIndex={setIndex}
+        />
       )}
 
-      {deck == null || idx == deck.questions.length ? null : (
-        <Button
-          onClick={() => setIndex()}
-          sx={{ mt: 1, mr: 1 }}
-          variant="outlined"
-        >
-          NEXT
-        </Button>
-      )}
+      {/* {deck == null || idx == deck.questions.length ? null : (
+        <div>
+          <Button
+            onClick={() => setIndex("desc")}
+            sx={{ mt: 1, mr: 1 }}
+            variant="outlined"
+          >
+            BACK
+          </Button>
+          <Button
+            onClick={() => setIndex("asc")}
+            sx={{ mt: 1, mr: 1 }}
+            variant="outlined"
+          >
+            NEXT
+          </Button>
+        </div>
+      )} */}
 
       {deck != null && idx == deck.questions.length ? (
         <Button

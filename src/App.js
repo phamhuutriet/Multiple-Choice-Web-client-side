@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddQuestion from "./components/Deck/AddDeck/AddQuestion";
 import AllDeck from "./components/Deck/AllDeck";
-import LearnDeck from "./components/Deck/Deck";
+import LearnDeck from "./components/Deck/LearnDeck";
 import DeckHome from "./components/Deck/DeckHome";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
