@@ -5,3 +5,4 @@ export const CREATE_NEW_DECK = "CREATE_NEW_DECK";
 export const ADD_QUESTION = "ADD_QUESTION";
 export const UPDATE_QUESTION = "UPDATE_QUESTION";
 export const DELETE_QUESTION = "DELETE_QUESTION";
+export const DELETE_DECK = "DELETE_DECK";

@@ -6,6 +6,7 @@ import {
   ADD_QUESTION,
   UPDATE_QUESTION,
   DELETE_QUESTION,
+  DELETE_DECK,
 } from "../actions/actionTypes";
 
 export default (decks = [], action) => {
@@ -32,9 +33,11 @@ export default (decks = [], action) => {
       return decks.map((deck) => (deck.id == action.deckId ? updatedDeck : deck));
     case DELETE_QUESTION:
       var updatedDeck = decks.find((deck) => deck.id == action.deckId);
-      updatedDeck.questions = updatedDeck.questions.map((question) => (question.id == action.questionId ? null : question));
+      updatedDeck.questions = updatedDeck.filter((question) => question.id != action.questionId);
       console.log(updatedDeck.questions);
       return decks.map((deck) => (deck.id == action.deckId ? updatedDeck : deck));
+    case DELETE_DECK:
+      return decks.filter((deck) => deck.id != action.deckId);
     default:
       return decks;
   }

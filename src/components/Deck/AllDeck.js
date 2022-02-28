@@ -1,11 +1,14 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { deleteDeck } from "../../redux/actions/actions";
 import PopUpNewDeck from "../PopUpNewDeck";
 
 function AllDeck() {
   const decks = useSelector((state) => state.deck);
   const [trigger, setTrigger] = useState(false);
+  const dispatch = useDispatch();
 
   const navigateToURL = (url) => {
     window.location.href = url;
@@ -13,6 +16,10 @@ function AllDeck() {
 
   const handleOnClickNewDeck = () => {
     setTrigger((prev) => true);
+  };
+
+  const handleDeleteDeck = (deckId) => {
+    dispatch(deleteDeck(deckId));
   };
 
   return (
@@ -23,12 +30,11 @@ function AllDeck() {
         decks.map((deck) => (
           <div key={deck.id}>
             <h2>{deck.name}</h2>
-            <Button
-              variant="outlined"
-              onClick={() => navigateToURL(`/decks/${deck.id}`)}
-              sx={{ mt: 1, mr: 1 }}
-            >
+            <Button variant="outlined" onClick={() => navigateToURL(`/decks/${deck.id}`)} sx={{ mt: 1, mr: 1 }}>
               Start Deck
+            </Button>
+            <Button variant="outlined" onClick={() => handleDeleteDeck(deck.id)} sx={{ mt: 1, mr: 1 }}>
+              Delete Deck
             </Button>
           </div>
         ))

@@ -19,3 +19,5 @@ export const fetchQuestionById = (questionId) => axios.get(QUESTIONS_URL + `/${q
 export const updateQuestionById = (questionId, updatedQuestion) => axios.patch(QUESTIONS_URL + `/${questionId}`, updatedQuestion);
 
 export const deleteQuestionById = (questionId) => axios.delete(QUESTIONS_URL + `/${questionId}`);
+
+export const deleteDeckById = (deckId) => axios.delete(DECKS_URL + `/${deckId}`);
