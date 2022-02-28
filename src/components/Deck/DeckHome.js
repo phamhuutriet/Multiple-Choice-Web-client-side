@@ -7,7 +7,7 @@ function DeckHome() {
   const navigate = useNavigate();
 
   const navigateLearn = () => {
-    navigate(`/decks/${id}/learn/noredux`);
+    navigate(`/decks/${id}/learn/controller/`);
   };
 
   const navigateAddCard = () => {
@@ -19,18 +19,10 @@ function DeckHome() {
       <Button sx={{ mt: 1, mr: 1 }} variant="outlined">
         DECK INFO
       </Button>
-      <Button
-        onClick={() => navigateLearn()}
-        sx={{ mt: 1, mr: 1 }}
-        variant="outlined"
-      >
+      <Button onClick={() => navigateLearn()} sx={{ mt: 1, mr: 1 }} variant="outlined">
         LEARN
       </Button>
-      <Button
-        onClick={() => navigateAddCard()}
-        sx={{ mt: 1, mr: 1 }}
-        variant="outlined"
-      >
+      <Button onClick={() => navigateAddCard()} sx={{ mt: 1, mr: 1 }} variant="outlined">
         ADD CARDS
       </Button>
     </div>

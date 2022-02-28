@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import NavBar from "./components/NavBar";
 import { fetchAllDeck } from "./redux/actions/actions";
 import LearnDeckNoRedux from "./components/Deck/Learn/LearnDeckNoRedux";
+import LearnController from "./components/Deck/Learn/Controller/LearnController";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function App() {
               </div>
             }
           />
-          <Route
+          {/* <Route
             path="/decks/:id/learn"
             element={
               <div>
@@ -47,13 +48,22 @@ function App() {
                 <LearnDeck />
               </div>
             }
-          />
+          /> */}
           <Route
-            path="/decks/:id/learn/noredux"
+            path="/decks/:id/learn/:shuffleQuestions/:shuffleChoices/:sortByPriority"
             element={
               <div>
                 <NavBar />
                 <LearnDeckNoRedux />
+              </div>
+            }
+          />
+          <Route
+            path="/decks/:id/learn/controller"
+            element={
+              <div>
+                <NavBar />
+                <LearnController />
               </div>
             }
           />

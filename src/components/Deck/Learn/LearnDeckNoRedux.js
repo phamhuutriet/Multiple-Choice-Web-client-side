@@ -5,8 +5,8 @@ import Question from "../../question/Question";
 import Button from "@mui/material/Button";
 import * as api from "../../../api/index";
 
-function LearnDeckNoRedux({ shuffleQuestion, shuffleChoice }) {
-  const { id } = useParams();
+function LearnDeckNoRedux() {
+  const { id, shuffleQuestions, shuffleChoices, sortByPriority } = useParams();
   const [deck, setDeck] = useState([]);
   const navigate = useNavigate();
   const [idx, setIdx] = useState(0);
@@ -14,7 +14,7 @@ function LearnDeckNoRedux({ shuffleQuestion, shuffleChoice }) {
 
   useEffect(() => {
     const fetchDeck = async () => {
-      const { data } = await api.fetchDeckQuestionById(id, true, true);
+      const { data } = await api.fetchDeckQuestionById(id, shuffleQuestions, shuffleChoices, sortByPriority);
       setDeck(data);
     };
     fetchDeck();
@@ -55,31 +55,8 @@ function LearnDeckNoRedux({ shuffleQuestion, shuffleChoice }) {
         />
       )}
 
-      {/* {deck == null || idx == deck.questions.length ? null : (
-        <div>
-          <Button
-            onClick={() => setIndex("desc")}
-            sx={{ mt: 1, mr: 1 }}
-            variant="outlined"
-          >
-            BACK
-          </Button>
-          <Button
-            onClick={() => setIndex("asc")}
-            sx={{ mt: 1, mr: 1 }}
-            variant="outlined"
-          >
-            NEXT
-          </Button>
-        </div>
-      )} */}
-
-      {deck.length == 0 && idx == deck.length ? (
-        <Button
-          onClick={() => handleOnClick()}
-          sx={{ mt: 1, mr: 1 }}
-          variant="outlined"
-        >
+      {deck.length != 0 && idx == deck.length ? (
+        <Button onClick={() => handleOnClick()} sx={{ mt: 1, mr: 1 }} variant="outlined">
           END TEST
         </Button>
       ) : null}
