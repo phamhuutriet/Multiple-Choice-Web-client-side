@@ -14,9 +14,13 @@ function DeckHome() {
     navigate(`/decks/${id}/addCard`);
   };
 
+  const navigateDeckInfo = () => {
+    navigate(`/decks/${id}/deckinfo`);
+  };
+
   return (
     <div>
-      <Button sx={{ mt: 1, mr: 1 }} variant="outlined">
+      <Button onClick={() => navigateDeckInfo()} sx={{ mt: 1, mr: 1 }} variant="outlined">
         DECK INFO
       </Button>
       <Button onClick={() => navigateLearn()} sx={{ mt: 1, mr: 1 }} variant="outlined">

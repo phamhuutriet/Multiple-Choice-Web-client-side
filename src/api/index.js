@@ -11,11 +11,9 @@ export const createNewDeck = (deck) => axios.post(DECKS_URL, deck);
 
 export const addQuestionToDeck = (newQuestion, deckId) => axios.post(DECKS_URL + `/${deckId}/questions`, newQuestion);
 
-export const fetchDeckQuestionById = (deckId, shuffleQuestions, shuffleChoices, sortByPriority) => {
-  console.log(
-    DECKS_URL + `/${deckId}/questions/?shuffleQuestion=${shuffleQuestions}&shuffleChoice=${shuffleChoices}&sortByPriority=${sortByPriority}`
-  );
-  return axios.get(
-    DECKS_URL + `/${deckId}/questions/?shuffleQuestion=${shuffleQuestions}&shuffleChoice=${shuffleChoices}&sortByPriority=${sortByPriority}`
-  );
-};
+export const fetchDeckQuestionById = (deckId, shuffleQuestions, shuffleChoices, sortByPriority) =>
+  axios.get(DECKS_URL + `/${deckId}/questions/?shuffleQuestion=${shuffleQuestions}&shuffleChoice=${shuffleChoices}&sortByPriority=${sortByPriority}`);
+
+export const fetchQuestionById = (questionId) => axios.get(QUESTIONS_URL + `/${questionId}`);
+
+export const updateQuestionById = (questionId, updatedQuestion) => axios.patch(QUESTIONS_URL + `/${questionId}`, updatedQuestion);

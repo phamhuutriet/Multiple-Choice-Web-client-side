@@ -10,6 +10,9 @@ import NavBar from "./components/NavBar";
 import { fetchAllDeck } from "./redux/actions/actions";
 import LearnDeckNoRedux from "./components/Deck/Learn/LearnDeckNoRedux";
 import LearnController from "./components/Deck/Learn/Controller/LearnController";
+import DeckInfo from "./components/Deck/DeckInfo/DeckInfo";
+import AllQuestion from "./components/Deck/DeckInfo/AllQuestion";
+import QuestionEdit from "./components/Deck/DeckInfo/QuestionEdit";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,15 +43,6 @@ function App() {
               </div>
             }
           />
-          {/* <Route
-            path="/decks/:id/learn"
-            element={
-              <div>
-                <NavBar />
-                <LearnDeck />
-              </div>
-            }
-          /> */}
           <Route
             path="/decks/:id/learn/:shuffleQuestions/:shuffleChoices/:sortByPriority"
             element={
@@ -75,6 +69,33 @@ function App() {
                 <div style={{ textAlign: "center" }}>
                   <DeckHome />
                 </div>
+              </div>
+            }
+          />
+          <Route
+            path="/decks/:id/deckinfo"
+            element={
+              <div>
+                <NavBar />
+                <DeckInfo />
+              </div>
+            }
+          />
+          <Route
+            path="/decks/:id/deckinfo/allQuestions"
+            element={
+              <div>
+                <NavBar />
+                <AllQuestion />
+              </div>
+            }
+          />
+          <Route
+            path="/decks/:id/deckinfo/allQuestions/:questionId/edit"
+            element={
+              <div>
+                <NavBar />
+                <QuestionEdit />
               </div>
             }
           />

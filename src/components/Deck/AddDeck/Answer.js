@@ -7,8 +7,8 @@ import Button from "@mui/material/Button";
 const isAnswerColor = "green";
 const notAnswerColor = "red";
 
-export default function Answer({ isAnswer, updateChoice, idx, setAnswerIdx }) {
-  const [choice, setChoice] = useState({ body: "", isAnswer: isAnswer });
+export default function Answer({ isAnswer, updateChoice, idx, setAnswerIdx, body }) {
+  const [choice, setChoice] = useState({ body: body, isAnswer: isAnswer });
   const [buttonColor, setButtonColor] = useState(notAnswerColor);
 
   useEffect(() => {
@@ -16,7 +16,6 @@ export default function Answer({ isAnswer, updateChoice, idx, setAnswerIdx }) {
   }, [choice.body]);
 
   useEffect(() => {
-    console.log(`use effect ${choice.body} color`);
     setButtonColor((prev) => (isAnswer ? isAnswerColor : notAnswerColor));
   });
 
@@ -26,8 +25,6 @@ export default function Answer({ isAnswer, updateChoice, idx, setAnswerIdx }) {
       body: e.target.value,
     }));
   };
-
-  console.log(isAnswer);
 
   const onClickIsAnswer = () => {
     setChoice((prev) => ({
@@ -40,17 +37,9 @@ export default function Answer({ isAnswer, updateChoice, idx, setAnswerIdx }) {
   return (
     <Box component="form" noValidate autoComplete="off">
       <FormControl sx={{ width: "25ch" }}>
-        <OutlinedInput
-          value={choice.body}
-          onChange={onChangeBody}
-          placeholder="Please enter answer"
-        />
+        <OutlinedInput value={choice.body} onChange={onChangeBody} placeholder="Please enter answer" />
       </FormControl>
-      <Button
-        onClick={() => onClickIsAnswer()}
-        sx={{ mt: 1, mr: 1, color: buttonColor }}
-        variant="outlined"
-      >
+      <Button onClick={() => onClickIsAnswer()} sx={{ mt: 1, mr: 1, color: buttonColor }} variant="outlined">
         IS ANSWER
       </Button>
     </Box>
