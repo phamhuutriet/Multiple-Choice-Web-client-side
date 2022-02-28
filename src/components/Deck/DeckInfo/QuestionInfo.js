@@ -1,12 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
+import { deleteQuestion } from "../../../redux/actions/actions";
 
-function QuestionInfo({ question, id }) {
+function QuestionInfo({ question, deckId, setRerender }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const navigateToEdit = () => {
-    navigate(`/decks/${id}/deckinfo/allQuestions/${question.id}/edit`);
+    navigate(`/decks/${deckId}/deckinfo/allQuestions/${question.id}/edit`);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteQuestion(question.id, deckId));
+    setRerender((prev) => !prev);
   };
 
   return (
@@ -17,7 +25,7 @@ function QuestionInfo({ question, id }) {
       <Button onClick={() => navigateToEdit()} sx={{ mt: 1, mr: 1 }} variant="outlined">
         EDIT
       </Button>
-      <Button sx={{ mt: 1, mr: 1 }} variant="outlined">
+      <Button onClick={() => handleDelete()} sx={{ mt: 1, mr: 1 }} variant="outlined">
         DELETE
       </Button>
     </div>

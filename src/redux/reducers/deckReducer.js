@@ -1,4 +1,12 @@
-import { FETCH_ALL_DECKS, UPDATE_DECK_REDUX, UPDATE_PRIORITY_SCORE, CREATE_NEW_DECK, ADD_QUESTION, UPDATE_QUESTION } from "../actions/actionTypes";
+import {
+  FETCH_ALL_DECKS,
+  UPDATE_DECK_REDUX,
+  UPDATE_PRIORITY_SCORE,
+  CREATE_NEW_DECK,
+  ADD_QUESTION,
+  UPDATE_QUESTION,
+  DELETE_QUESTION,
+} from "../actions/actionTypes";
 
 export default (decks = [], action) => {
   switch (action.type) {
@@ -21,6 +29,11 @@ export default (decks = [], action) => {
     case UPDATE_QUESTION:
       var updatedDeck = decks.find((deck) => deck.id == action.deckId);
       updatedDeck.questions = updatedDeck.questions.map((question) => (question.id == action.id ? action.payloads : question));
+      return decks.map((deck) => (deck.id == action.deckId ? updatedDeck : deck));
+    case DELETE_QUESTION:
+      var updatedDeck = decks.find((deck) => deck.id == action.deckId);
+      updatedDeck.questions = updatedDeck.questions.map((question) => (question.id == action.questionId ? null : question));
+      console.log(updatedDeck.questions);
       return decks.map((deck) => (deck.id == action.deckId ? updatedDeck : deck));
     default:
       return decks;

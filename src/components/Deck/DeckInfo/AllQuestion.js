@@ -6,6 +6,7 @@ import QuestionInfo from "./QuestionInfo";
 function AllQuestion() {
   const { id } = useParams();
   const [questions, setQuestions] = useState([]);
+  const [rerender, setRerender] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,9 +14,9 @@ function AllQuestion() {
       setQuestions((prev) => data);
     };
     fetchData();
-  }, []);
+  }, [rerender]);
 
-  console.log(questions);
+  console.log(rerender);
 
   return (
     <div>
@@ -24,7 +25,7 @@ function AllQuestion() {
       ) : (
         <div>
           {questions.map((question, idx) => {
-            return <QuestionInfo key={idx} question={question} id={id} />;
+            return <QuestionInfo key={idx} question={question} deckId={id} setRerender={setRerender} />;
           })}
         </div>
       )}

@@ -1,5 +1,5 @@
 import * as api from "../../api/index";
-import { ADD_QUESTION, CREATE_NEW_DECK, FETCH_ALL_DECKS, UPDATE_PRIORITY_SCORE, UPDATE_QUESTION } from "./actionTypes";
+import { ADD_QUESTION, CREATE_NEW_DECK, DELETE_QUESTION, FETCH_ALL_DECKS, UPDATE_PRIORITY_SCORE, UPDATE_QUESTION } from "./actionTypes";
 
 export const fetchAllDeck = () => async (dispatch) => {
   try {
@@ -44,6 +44,15 @@ export const updateQuestion = (updatedQuestion, questionId, deckId) => async (di
   try {
     const { data } = await api.updateQuestionById(questionId, updatedQuestion);
     dispatch({ type: UPDATE_QUESTION, payloads: { data }, id: { questionId }, deckId: { deckId } });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const deleteQuestion = (questionId, deckId) => async (dispatch) => {
+  try {
+    await api.deleteQuestionById(questionId);
+    dispatch({ type: DELETE_QUESTION, questionId: { questionId }, deckId: { deckId } });
   } catch (err) {
     console.log(err.message);
   }

@@ -17,3 +17,5 @@ export const fetchDeckQuestionById = (deckId, shuffleQuestions, shuffleChoices, 
 export const fetchQuestionById = (questionId) => axios.get(QUESTIONS_URL + `/${questionId}`);
 
 export const updateQuestionById = (questionId, updatedQuestion) => axios.patch(QUESTIONS_URL + `/${questionId}`, updatedQuestion);
+
+export const deleteQuestionById = (questionId) => axios.delete(QUESTIONS_URL + `/${questionId}`);
