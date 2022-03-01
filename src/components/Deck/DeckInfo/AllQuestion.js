@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import * as api from "../../../api/index";
 import QuestionInfo from "./QuestionInfo";
 
 function AllQuestion() {
   const { id } = useParams();
-  const [questions, setQuestions] = useState([]);
-  const [rerender, setRerender] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await api.fetchDeckQuestionById(id);
-      setQuestions((prev) => data);
-    };
-    fetchData();
-  }, [rerender]);
-
-  console.log(rerender);
+  const questions = useSelector((state) => {
+    const fetchedDeck = state.deck.find((deck) => deck.id == id);
+    return fetchedDeck != null ? fetchedDeck.questions : [];
+  });
 
   return (
     <div>
@@ -25,7 +18,8 @@ function AllQuestion() {
       ) : (
         <div>
           {questions.map((question, idx) => {
-            return <QuestionInfo key={idx} question={question} deckId={id} setRerender={setRerender} />;
+            console.log("question ", question);
+            return <QuestionInfo key={idx} question={question} deckId={id} />;
           })}
         </div>
       )}

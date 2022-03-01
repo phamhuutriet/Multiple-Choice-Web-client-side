@@ -4,19 +4,12 @@ import { useNavigate, useParams } from "react-router";
 import Question from "../../question/Question";
 import Button from "@mui/material/Button";
 
-function LearnDeck({ shuffleQuestion, shuffleChoice }) {
+function LearnDeck() {
   const { id } = useParams();
-  const fetchedDeck = useSelector((state) =>
-    state.deck.find((deck) => deck.id == id)
-  );
-  const [deck, setDeck] = useState(fetchedDeck);
+  const deck = useSelector((state) => state.deck.find((deck) => deck.id == id));
   const navigate = useNavigate();
   const [idx, setIdx] = useState(0);
   const [completeQuestions, setCompleteQuestions] = useState(new Set());
-
-  useEffect(() => {
-    setDeck(fetchedDeck);
-  }, [fetchedDeck]);
 
   const handleOnClick = async () => {
     navigate(`/decks/${id}`);
@@ -53,31 +46,8 @@ function LearnDeck({ shuffleQuestion, shuffleChoice }) {
         />
       )}
 
-      {/* {deck == null || idx == deck.questions.length ? null : (
-        <div>
-          <Button
-            onClick={() => setIndex("desc")}
-            sx={{ mt: 1, mr: 1 }}
-            variant="outlined"
-          >
-            BACK
-          </Button>
-          <Button
-            onClick={() => setIndex("asc")}
-            sx={{ mt: 1, mr: 1 }}
-            variant="outlined"
-          >
-            NEXT
-          </Button>
-        </div>
-      )} */}
-
       {deck != null && idx == deck.questions.length ? (
-        <Button
-          onClick={() => handleOnClick()}
-          sx={{ mt: 1, mr: 1 }}
-          variant="outlined"
-        >
+        <Button onClick={() => handleOnClick()} sx={{ mt: 1, mr: 1 }} variant="outlined">
           END TEST
         </Button>
       ) : null}

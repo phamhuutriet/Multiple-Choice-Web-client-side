@@ -24,7 +24,7 @@ function DeckHome() {
         DECK INFO
       </Button>
       <Button onClick={() => navigateLearn()} sx={{ mt: 1, mr: 1 }} variant="outlined">
-        LEARN
+        CUSTOM LEARN
       </Button>
       <Button onClick={() => navigateAddCard()} sx={{ mt: 1, mr: 1 }} variant="outlined">
         ADD CARDS

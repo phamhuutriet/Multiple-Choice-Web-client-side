@@ -7,6 +7,7 @@ import {
   UPDATE_QUESTION,
   DELETE_QUESTION,
   DELETE_DECK,
+  FETCH_DECK_QUESTION,
 } from "../actions/actionTypes";
 
 export default (decks = [], action) => {
@@ -33,11 +34,15 @@ export default (decks = [], action) => {
       return decks.map((deck) => (deck.id == action.deckId ? updatedDeck : deck));
     case DELETE_QUESTION:
       var updatedDeck = decks.find((deck) => deck.id == action.deckId);
-      updatedDeck.questions = updatedDeck.filter((question) => question.id != action.questionId);
-      console.log(updatedDeck.questions);
+      updatedDeck.questions = updatedDeck.questions.filter((question) => question.id != action.questionId);
+      console.log("delete in reducer: ", updatedDeck.questions);
       return decks.map((deck) => (deck.id == action.deckId ? updatedDeck : deck));
     case DELETE_DECK:
       return decks.filter((deck) => deck.id != action.deckId);
+    case FETCH_DECK_QUESTION:
+      var fetchedDeck = decks.find((deck) => deck.id == action.deckId);
+      fetchedDeck.questions = action.payloads;
+      return decks.map((deck) => (deck.id == action.deckId ? fetchedDeck : deck));
     default:
       return decks;
   }

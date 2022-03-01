@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 import { deleteQuestion } from "../../../redux/actions/actions";
 
-function QuestionInfo({ question, deckId, setRerender }) {
+function QuestionInfo({ question, deckId }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -14,7 +14,6 @@ function QuestionInfo({ question, deckId, setRerender }) {
 
   const handleDelete = () => {
     dispatch(deleteQuestion(question.id, deckId));
-    setRerender((prev) => !prev);
   };
 
   return (

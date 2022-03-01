@@ -1,5 +1,14 @@
 import * as api from "../../api/index";
-import { ADD_QUESTION, CREATE_NEW_DECK, DELETE_DECK, DELETE_QUESTION, FETCH_ALL_DECKS, UPDATE_PRIORITY_SCORE, UPDATE_QUESTION } from "./actionTypes";
+import {
+  ADD_QUESTION,
+  CREATE_NEW_DECK,
+  DELETE_DECK,
+  DELETE_QUESTION,
+  FETCH_ALL_DECKS,
+  FETCH_DECK_QUESTION,
+  UPDATE_PRIORITY_SCORE,
+  UPDATE_QUESTION,
+} from "./actionTypes";
 
 export const fetchAllDeck = () => async (dispatch) => {
   try {
@@ -43,7 +52,7 @@ export const addQuestionToDeck = (newQuestion, deckId) => async (dispatch) => {
 export const updateQuestion = (updatedQuestion, questionId, deckId) => async (dispatch) => {
   try {
     const { data } = await api.updateQuestionById(questionId, updatedQuestion);
-    dispatch({ type: UPDATE_QUESTION, payloads: { data }, id: questionId, deckId: deckId });
+    dispatch({ type: UPDATE_QUESTION, payloads: data, id: questionId, deckId: deckId });
   } catch (err) {
     console.log(err.message);
   }
@@ -62,6 +71,15 @@ export const deleteDeck = (deckId) => async (dispatch) => {
   try {
     await api.deleteDeckById(deckId);
     dispatch({ type: DELETE_DECK, deckId: deckId });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const fetchDeckQuestionById = (deckId) => async (dispatch) => {
+  try {
+    const { data } = await api.fetchDeckQuestionById(deckId);
+    dispatch({ type: FETCH_DECK_QUESTION, payloads: data, deckId: deckId });
   } catch (err) {
     console.log(err.message);
   }

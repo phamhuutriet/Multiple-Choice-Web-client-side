@@ -29,6 +29,7 @@ export default function QuestionEdit() {
   const navigate = useNavigate();
 
   // USE EFFECTS SITE
+  console.log(choices);
 
   // Set number of choices effect
   useEffect(() => {
@@ -85,10 +86,11 @@ export default function QuestionEdit() {
     if (answerIdx != null) {
       if (!isChoiceBodyCollided()) {
         const updatedQuestion = { description: description, choices: choices };
+        console.log(updatedQuestion);
         dispatch(updateQuestion(updatedQuestion, questionId, id));
         setHelperText((prev) => "");
         resetDefault();
-        navigate(`/decks/${id}/deckinfo`);
+        navigate(`/decks/${id}/deckinfo/allQuestions`);
       } else {
         setHelperText((prev) => "Answers' bodies collided");
       }
