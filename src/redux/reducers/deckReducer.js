@@ -11,7 +11,6 @@ import {
 } from "../actions/actionTypes";
 
 export default (decks = [], action) => {
-  console.log(action.type);
   switch (action.type) {
     case FETCH_ALL_DECKS:
       return action.payloads;

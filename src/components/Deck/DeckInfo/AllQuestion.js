@@ -8,7 +8,6 @@ function AllQuestion() {
   const { id } = useParams();
   const questions = useSelector((state) => {
     const fetchedDeck = state.deck.find((deck) => deck.id == id);
-    console.log("all questions: ", fetchedDeck);
     return fetchedDeck != null ? fetchedDeck.questions : [];
   });
 
