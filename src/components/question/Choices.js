@@ -12,14 +12,7 @@ const initHelperText = "Choose wisely";
 const initIsComplete = false;
 const initDisableButton = false;
 
-export default function Choices({
-  choices,
-  setPriority,
-  setCompleteQuestions,
-  questionIdx,
-  inCompletedSet,
-  setIndex,
-}) {
+export default function Choices({ choices, setCompleteQuestions, questionIdx, inCompletedSet, setIndex, dispatchPriority }) {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState("Choose wisely");
@@ -43,15 +36,15 @@ export default function Choices({
   const handleSubmit = (event) => {
     event.preventDefault();
     if (value.slice(0, 4) === "true") {
-      setPriority("true");
       setHelperText("You got it!");
       setError(false);
       handleComplete();
+      dispatchPriority("true");
     } else if (value.slice(0, 5) === "false") {
-      setPriority("false");
       setHelperText("Sorry, wrong answer!");
       setError(true);
       handleComplete();
+      dispatchPriority("false");
     } else {
       setHelperText("Please select an option.");
       setError(true);
@@ -79,12 +72,7 @@ export default function Choices({
   return (
     <form onSubmit={handleSubmit}>
       <FormControl sx={{ m: 3 }} error={error} variant="standard">
-        <RadioGroup
-          aria-labelledby="demo-error-radios"
-          name="quiz"
-          value={value}
-          onChange={handleRadioChange}
-        >
+        <RadioGroup aria-labelledby="demo-error-radios" name="quiz" value={value} onChange={handleRadioChange}>
           {choices.map((choice, idx) => {
             return (
               <FormControlLabel
@@ -100,11 +88,7 @@ export default function Choices({
         <FormHelperText>{helperText}</FormHelperText>
 
         {isComplete ? (
-          <Button
-            onClick={() => setIndex("asc")}
-            sx={{ mt: 1, mr: 1 }}
-            variant="outlined"
-          >
+          <Button onClick={() => setIndex("asc")} sx={{ mt: 1, mr: 1 }} variant="outlined">
             NEXT
           </Button>
         ) : (

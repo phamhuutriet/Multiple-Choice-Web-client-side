@@ -11,13 +11,15 @@ import {
 } from "../actions/actionTypes";
 
 export default (decks = [], action) => {
+  console.log(action.type);
   switch (action.type) {
     case FETCH_ALL_DECKS:
       return action.payloads;
     case UPDATE_PRIORITY_SCORE:
-      var updatedDeck = decks.find((deck) => deck.id == action.payloads.deckId);
-      updatedDeck.questions.map((question) => (question.id == action.payloads.data.id ? action.payloads.data : question));
-      return decks.map((deck) => (deck.id == updatedDeck.id ? updatedDeck : deck));
+      var updatedDeck = decks.find((deck) => deck.id == action.deckId);
+      updatedDeck.questions = updatedDeck.questions.map((question) => (question.id == action.id ? action.payloads : question));
+      console.log("reducer ", updatedDeck.questions);
+      return decks.map((deck) => (deck.id == action.deckId ? updatedDeck : deck));
     case UPDATE_DECK_REDUX:
       var deckId = action.payloads.deckId;
       var updatedDeck = action.payloads.deck;

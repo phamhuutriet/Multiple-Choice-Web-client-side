@@ -8,6 +8,7 @@ function AllQuestion() {
   const { id } = useParams();
   const questions = useSelector((state) => {
     const fetchedDeck = state.deck.find((deck) => deck.id == id);
+    console.log("all questions: ", fetchedDeck);
     return fetchedDeck != null ? fetchedDeck.questions : [];
   });
 
@@ -18,7 +19,6 @@ function AllQuestion() {
       ) : (
         <div>
           {questions.map((question, idx) => {
-            console.log("question ", question);
             return <QuestionInfo key={idx} question={question} deckId={id} />;
           })}
         </div>

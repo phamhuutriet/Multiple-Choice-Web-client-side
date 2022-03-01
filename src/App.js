@@ -13,6 +13,7 @@ import LearnController from "./components/Deck/Learn/Controller/LearnController"
 import DeckInfo from "./components/Deck/DeckInfo/DeckInfo";
 import AllQuestion from "./components/Deck/DeckInfo/AllQuestion";
 import QuestionEdit from "./components/Deck/DeckInfo/QuestionEdit";
+import SpacedRep from "./components/Deck/Learn/SpacedRep";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ function App() {
             element={
               <div>
                 <NavBar />
-                <LearnDeckNoRedux />
+                <LearnDeck />
               </div>
             }
           />
@@ -69,6 +70,15 @@ function App() {
                 <div style={{ textAlign: "center" }}>
                   <DeckHome />
                 </div>
+              </div>
+            }
+          />
+          <Route
+            path="/decks/:id/spacedRep"
+            element={
+              <div>
+                <NavBar />
+                <SpacedRep />
               </div>
             }
           />

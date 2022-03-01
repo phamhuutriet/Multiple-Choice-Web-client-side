@@ -18,10 +18,17 @@ function DeckHome() {
     navigate(`/decks/${id}/deckinfo`);
   };
 
+  const navigateSpacedRep = () => {
+    navigate(`/decks/${id}/spacedRep`);
+  };
+
   return (
     <div>
       <Button onClick={() => navigateDeckInfo()} sx={{ mt: 1, mr: 1 }} variant="outlined">
         DECK INFO
+      </Button>
+      <Button onClick={() => navigateSpacedRep()} sx={{ mt: 1, mr: 1 }} variant="outlined">
+        SPACED REPETITION
       </Button>
       <Button onClick={() => navigateLearn()} sx={{ mt: 1, mr: 1 }} variant="outlined">
         CUSTOM LEARN

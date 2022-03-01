@@ -8,10 +8,6 @@ function Question({ question, deckId, setCompleteQuestions, questionIdx, inCompl
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(updatePriorityScore(thisQuestion, deckId));
-  }, [thisQuestion]);
-
-  useEffect(() => {
     setQuestion(question);
   }, [question]);
 
@@ -29,6 +25,14 @@ function Question({ question, deckId, setCompleteQuestions, questionIdx, inCompl
     }
   };
 
+  const dispatchPriority = (sign) => {
+    if (sign == "true") {
+      dispatch(updatePriorityScore({ ...thisQuestion, priorityScore: thisQuestion.priorityScore - 1 }, deckId));
+    } else {
+      dispatch(updatePriorityScore({ ...thisQuestion, priorityScore: Math.max(0, thisQuestion.priorityScore + 1) }, deckId));
+    }
+  };
+
   return (
     <div>
       <h3>{thisQuestion.description}</h3>
@@ -38,6 +42,7 @@ function Question({ question, deckId, setCompleteQuestions, questionIdx, inCompl
         setCompleteQuestions={setCompleteQuestions}
         questionIdx={questionIdx}
         inCompletedSet={inCompletedSet}
+        dispatchPriority={dispatchPriority}
         setIndex={setIndex}
       />
     </div>
