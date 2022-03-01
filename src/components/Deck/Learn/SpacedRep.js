@@ -14,18 +14,20 @@ const timeHandle = (str) => {
   return date;
 };
 
+const createDeck = (fetchedDeck) => {
+  const now = new Date();
+  if (fetchedDeck != null) {
+    fetchedDeck.questions = fetchedDeck.questions
+      .filter((question) => timeHandle(question.spacedRepetition).getTime() <= now.getTime())
+      .sort((q1, q2) => q1.priorityScore - q2.priorityScore);
+  }
+  return fetchedDeck != null ? fetchedDeck : null;
+};
+
 function SpacedRep() {
   const { id } = useParams();
-  const deck = useSelector((state) => {
-    const fetchedDeck = { ...state.deck.find((deck) => deck.id == id) };
-    const now = new Date();
-    if (fetchedDeck != null) {
-      fetchedDeck.questions = fetchedDeck.questions
-        .filter((question) => timeHandle(question.spacedRepetition).getTime() <= now.getTime())
-        .sort((q1, q2) => q1.priorityScore - q2.priorityScore);
-    }
-    return fetchedDeck != null ? fetchedDeck : null;
-  });
+  const fetchedDeck = useSelector((state) => state.deck.find((deck) => deck.id == id));
+  const deck = createDeck({ ...fetchedDeck });
 
   const navigate = useNavigate();
   const [idx, setIdx] = useState(0);
