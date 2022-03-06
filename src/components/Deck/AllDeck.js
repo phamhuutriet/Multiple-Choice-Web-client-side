@@ -6,6 +6,7 @@ import { deleteDeck } from "../../redux/actions/actions";
 import PopUpNewDeck from "../PopUpNewDeck";
 
 function AllDeck() {
+  const jwt = useSelector((state) => state.userInfo).jwt;
   const decks = useSelector((state) => state.deck);
   const [trigger, setTrigger] = useState(false);
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function AllDeck() {
   };
 
   const handleDeleteDeck = (deckId) => {
-    dispatch(deleteDeck(deckId));
+    dispatch(deleteDeck(jwt, deckId));
   };
 
   return (

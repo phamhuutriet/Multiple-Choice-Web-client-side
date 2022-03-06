@@ -14,13 +14,36 @@ import DeckInfo from "./components/Deck/DeckInfo/DeckInfo";
 import AllQuestion from "./components/Deck/DeckInfo/AllQuestion";
 import QuestionEdit from "./components/Deck/DeckInfo/QuestionEdit";
 import SpacedRep from "./components/Deck/Learn/SpacedRep";
+import Login from "./components/Authentication/Login";
 
 function App() {
+  const userInfo = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllDeck());
-  }, [dispatch]);
+    if (userInfo != null) dispatch(fetchAllDeck(userInfo.jwt, userInfo.userId));
+  }, [userInfo]);
+
+  console.log(userInfo);
+
+  if (userInfo == null) {
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div>
+                  <Login />
+                </div>
+              }
+            />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    );
+  }
 
   return (
     <BrowserRouter>

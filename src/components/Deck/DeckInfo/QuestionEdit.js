@@ -4,7 +4,7 @@ import Answer from "../AddDeck/Answer";
 import Description from "../AddDeck/Description";
 import NumAnswerSelect from "../AddDeck/NumAnswerSelect";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { updateQuestion } from "../../../redux/actions/actions";
 import FormHelperText from "@mui/material/FormHelperText";
@@ -19,6 +19,7 @@ const initHelperText = "";
 
 export default function QuestionEdit() {
   // INSTANCES
+  const jwt = useSelector((state) => state.userInfo).jwt;
   const { id, questionId } = useParams();
   const [description, setDescription] = useState(initDescription);
   const [numAnswer, setNumAnswer] = useState(initNumAnswer);
@@ -51,7 +52,7 @@ export default function QuestionEdit() {
   // Fetch question effect
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await api.fetchQuestionById(questionId);
+      const { data } = await api.fetchQuestionById(jwt, questionId);
       setDescription((prev) => data.description);
       setChoices((prev) => data.choices);
       setNumAnswer((prev) => data.choices.length);
@@ -87,7 +88,7 @@ export default function QuestionEdit() {
       if (!isChoiceBodyCollided()) {
         const updatedQuestion = { description: description, choices: choices };
         console.log(updatedQuestion);
-        dispatch(updateQuestion(updatedQuestion, questionId, id));
+        dispatch(updateQuestion(jwt, updatedQuestion, questionId, id));
         setHelperText((prev) => "");
         resetDefault();
         navigate(`/decks/${id}/deckinfo/allQuestions`);

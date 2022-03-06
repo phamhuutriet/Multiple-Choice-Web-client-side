@@ -1,10 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteQuestion } from "../../../redux/actions/actions";
 
 function QuestionInfo({ question, deckId }) {
+  const jwt = useSelector((state) => state.userInfo).jwt;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -13,7 +14,7 @@ function QuestionInfo({ question, deckId }) {
   };
 
   const handleDelete = () => {
-    dispatch(deleteQuestion(question.id, deckId));
+    dispatch(deleteQuestion(jwt, question.id, deckId));
   };
 
   return (

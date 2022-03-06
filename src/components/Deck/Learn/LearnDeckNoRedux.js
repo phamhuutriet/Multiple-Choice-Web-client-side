@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import * as api from "../../../api/index";
 
 function LearnDeckNoRedux() {
+  const jwt = useSelector((state) => state.userInfo).jwt;
   const { id, shuffleQuestions, shuffleChoices, sortByPriority } = useParams();
   const [deck, setDeck] = useState([]);
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function LearnDeckNoRedux() {
 
   useEffect(() => {
     const fetchDeck = async () => {
-      const { data } = await api.fetchDeckQuestionById(id, shuffleQuestions, shuffleChoices, sortByPriority);
+      const { data } = await api.fetchDeckQuestionById(jwt, id, shuffleQuestions, shuffleChoices, sortByPriority);
       setDeck(data);
     };
     fetchDeck();

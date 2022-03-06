@@ -16,6 +16,7 @@ const timeHandle = (str) => {
 
 const createDeck = (fetchedDeck) => {
   const now = new Date();
+  console.log(fetchedDeck);
   if (fetchedDeck != null) {
     fetchedDeck.questions = fetchedDeck.questions
       .filter((question) => timeHandle(question.spacedRepetition).getTime() <= now.getTime())

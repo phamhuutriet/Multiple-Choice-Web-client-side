@@ -8,11 +8,19 @@ import { Provider } from "react-redux";
 import rootReducer from "./redux/reducers/index";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+import storage from "redux-persist/lib/storage";
+import { persistStore, persistReducer } from "redux-persist";
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
+const persistConfig = {
+  key: "userInfo",
+  storage: storage,
+  whitelist: ["userInfo"], // which reducer want to store
+};
+const pReducer = persistReducer(persistConfig, rootReducer);
+
+const store = createStore(pReducer, composeWithDevTools(applyMiddleware(thunk)));
+
+const persistor = persistStore(store);
 
 ReactDOM.render(
   <React.StrictMode>

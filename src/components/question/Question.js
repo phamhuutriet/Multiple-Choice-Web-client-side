@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updatePriorityScore } from "../../redux/actions/actions";
 import Choices from "./Choices";
 
 function Question({ question, deckId, setCompleteQuestions, questionIdx, inCompletedSet, setIndex }) {
+  const jwt = useSelector((state) => state.userInfo).jwt;
   const [thisQuestion, setQuestion] = useState(question);
   const dispatch = useDispatch();
 
@@ -27,9 +28,9 @@ function Question({ question, deckId, setCompleteQuestions, questionIdx, inCompl
 
   const dispatchPriority = (sign) => {
     if (sign == "true") {
-      dispatch(updatePriorityScore({ ...thisQuestion, priorityScore: thisQuestion.priorityScore - 1 }, deckId));
+      dispatch(updatePriorityScore(jwt, { ...thisQuestion, priorityScore: thisQuestion.priorityScore - 1 }, deckId));
     } else {
-      dispatch(updatePriorityScore({ ...thisQuestion, priorityScore: Math.max(0, thisQuestion.priorityScore + 1) }, deckId));
+      dispatch(updatePriorityScore(jwt, { ...thisQuestion, priorityScore: Math.max(0, thisQuestion.priorityScore + 1) }, deckId));
     }
   };
 

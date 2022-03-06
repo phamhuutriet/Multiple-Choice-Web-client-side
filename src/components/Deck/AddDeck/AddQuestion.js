@@ -4,7 +4,7 @@ import Answer from "./Answer";
 import Description from "./Description";
 import NumAnswerSelect from "./NumAnswerSelect";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { addQuestionToDeck } from "../../../redux/actions/actions";
 import FormHelperText from "@mui/material/FormHelperText";
@@ -18,6 +18,7 @@ const initHelperText = "";
 
 export default function AddQuestion() {
   // INSTANCES
+  const jwt = useSelector((state) => state.userInfo).jwt;
   const { id } = useParams();
   const [description, setDescription] = useState(initDescription);
   const [numAnswer, setNumAnswer] = useState(initNumAnswer);
@@ -44,19 +45,11 @@ export default function AddQuestion() {
 
   // METHODS
   const updateChoice = (idx, updatedChoice) => {
-    setChoices((prev) =>
-      choices.map((choice, i) => (i == idx ? updatedChoice : choice))
-    );
+    setChoices((prev) => choices.map((choice, i) => (i == idx ? updatedChoice : choice)));
   };
 
   const updateAnswerIndex = (idx) => {
-    setChoices((prev) =>
-      choices.map((choice, i) =>
-        i == idx
-          ? { ...choice, isAnswer: true }
-          : { ...choice, isAnswer: false }
-      )
-    );
+    setChoices((prev) => choices.map((choice, i) => (i == idx ? { ...choice, isAnswer: true } : { ...choice, isAnswer: false })));
   };
 
   const resetDefault = () => {
@@ -71,7 +64,7 @@ export default function AddQuestion() {
     if (answerIdx != null) {
       if (!isChoiceBodyCollided()) {
         const newQuestion = { description: description, choices: choices };
-        dispatch(addQuestionToDeck(newQuestion, id));
+        dispatch(addQuestionToDeck(jwt, newQuestion, id));
         setHelperText((prev) => "");
         resetDefault();
       } else {
@@ -91,10 +84,7 @@ export default function AddQuestion() {
   return (
     <div style={{ textAlign: "center" }}>
       <h2>Add Question</h2>
-      <Description
-        setParentDescription={setDescription}
-        description={description}
-      />
+      <Description setParentDescription={setDescription} description={description} />
 
       <div>
         <h3> Number of Answers </h3>
@@ -103,27 +93,16 @@ export default function AddQuestion() {
 
       {choices.map((choice, i) => (
         <div key={i}>
-          <Answer
-            isAnswer={i == answerIdx}
-            updateChoice={updateChoice}
-            idx={i}
-            setAnswerIdx={setAnswerIdx}
-          />
+          <Answer isAnswer={i == answerIdx} updateChoice={updateChoice} idx={i} setAnswerIdx={setAnswerIdx} />
           <br />
         </div>
       ))}
 
-      <Button
-        onClick={() => addCardToDeck()}
-        sx={{ mt: 1, mr: 1 }}
-        variant="outlined"
-      >
+      <Button onClick={() => addCardToDeck()} sx={{ mt: 1, mr: 1 }} variant="outlined">
         SUBMIT
       </Button>
 
-      <FormHelperText style={{ textAlign: "center", color: "red" }}>
-        {helperText}
-      </FormHelperText>
+      <FormHelperText style={{ textAlign: "center", color: "red" }}>{helperText}</FormHelperText>
     </div>
   );
 }

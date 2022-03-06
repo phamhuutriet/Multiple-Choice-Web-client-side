@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/actions/actions";
 
 const pages = ["Home", "All Decks"];
 const urls = ["/", "/decks"];
@@ -20,7 +22,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -39,6 +41,11 @@ const ResponsiveAppBar = () => {
 
   const navigateToURL = (url) => {
     window.location.href = url;
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigateToURL("/");
   };
 
   return (
@@ -81,22 +88,13 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             LOGO
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page, idx) => (
-              <Button
-                key={page}
-                onClick={() => navigateToURL(urls[idx])}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
+              <Button key={page} onClick={() => navigateToURL(urls[idx])} sx={{ my: 2, color: "white", display: "block" }}>
                 {page}
               </Button>
             ))}
@@ -124,11 +122,22 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {settings.map((setting) => {
+                if (setting == "Logout") {
+                  return (
+                    <MenuItem key={setting} onClick={() => handleLogout()}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  );
+                } else {
+                  return (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  );
+                }
+              })}
+              ;
             </Menu>
           </Box>
         </Toolbar>
