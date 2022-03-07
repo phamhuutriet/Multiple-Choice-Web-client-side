@@ -28,7 +28,6 @@ export const fetchAllDeck = (jwt, userId) => async (dispatch) => {
 export const updatePriorityScore = (jwt, updatedQuestion, deckId) => async (dispatch) => {
   try {
     const { data } = await api.updatePriorityScore(jwt, updatedQuestion);
-    console.log("update to server data ", data);
     dispatch({ type: UPDATE_PRIORITY_SCORE, payloads: data, id: data.id, deckId: deckId });
   } catch (err) {
     console.log(err.message);
@@ -92,7 +91,6 @@ export const fetchDeckQuestionById = (deckId) => async (dispatch) => {
 export const authenticate = (logginInfo) => async (dispatch) => {
   try {
     const { data } = await api.authenticate(logginInfo);
-    console.log(data);
     dispatch({ type: AUTHENTICATE, payloads: { jwt: data.jwt, userId: data.userId } });
   } catch (err) {
     console.log(err.message);
@@ -104,6 +102,5 @@ export const logout = () => async (dispatch) => {
 };
 
 export const updateQuestionToRedux = (updatedQuestion, questionId, deckId) => async (dispatch) => {
-  console.log("dispatch update question to redux", updatedQuestion);
   dispatch({ type: UPDATE_QUESTION, payloads: updatedQuestion, id: questionId, deckId: deckId });
 };

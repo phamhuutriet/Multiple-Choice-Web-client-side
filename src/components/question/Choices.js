@@ -12,7 +12,7 @@ const initHelperText = "Choose wisely";
 const initIsComplete = false;
 const initDisableButton = false;
 
-export default function Choices({ choices, setCompleteQuestions, questionIdx, inCompletedSet, setIndex, dispatchPriority }) {
+export default function Choices({ choices, setCompleteQuestions, questionIdx, inCompletedSet, setIndex, dispatchPriority, handleWrongQuestion }) {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState("Choose wisely");
@@ -44,7 +44,8 @@ export default function Choices({ choices, setCompleteQuestions, questionIdx, in
       setHelperText("Sorry, wrong answer!");
       setError(true);
       handleComplete();
-      dispatchPriority("false");
+      // dispatchPriority("false");
+      handleWrongQuestion(questionIdx);
     } else {
       setHelperText("Please select an option.");
       setError(true);
@@ -88,7 +89,7 @@ export default function Choices({ choices, setCompleteQuestions, questionIdx, in
         <FormHelperText>{helperText}</FormHelperText>
 
         {isComplete ? (
-          <Button onClick={() => setIndex("asc")} sx={{ mt: 1, mr: 1 }} variant="outlined">
+          <Button onClick={() => setIndex()} sx={{ mt: 1, mr: 1 }} variant="outlined">
             NEXT
           </Button>
         ) : (

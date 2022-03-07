@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import Question from "../../question/Question";
 import Button from "@mui/material/Button";
+import { updatePriorityScore } from "../../../redux/actions/actions";
 
 const timeHandle = (str) => {
   // const times = str
@@ -14,7 +15,6 @@ const timeHandle = (str) => {
 
   var dateStr = JSON.parse('"' + str + '"');
   var date = new Date(dateStr);
-  console.log("date", date);
   return date;
 };
 
@@ -30,32 +30,45 @@ const createDeck = (fetchedDeck) => {
 };
 
 function SpacedRep() {
+  const jwt = useSelector((state) => state.userInfo).jwt;
   const { id } = useParams();
   const fetchedDeck = useSelector((state) => state.deck.find((deck) => deck.id == id));
-  const deck = createDeck({ ...fetchedDeck });
+  const [deck, setDeck] = useState(createDeck({ ...fetchedDeck }));
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [idx, setIdx] = useState(0);
   const [completeQuestions, setCompleteQuestions] = useState(new Set());
+  const [wrongQuestions, setWrongQuestions] = useState(new Set());
 
   const handleOnClick = async () => {
+    for (var questionId of wrongQuestions) {
+      console.log("iterate set ", questionId);
+      const thisQuestion = deck.questions.find((question) => question.id == questionId);
+      dispatch(updatePriorityScore(jwt, { ...thisQuestion, priorityScore: Math.max(0, thisQuestion.priorityScore + 1) }, id));
+    }
     navigate(`/decks/${id}`);
   };
 
-  const setIndex = (sign) => {
-    if (sign == "asc") {
-      setIdx(Math.min(idx + 1, deck.questions.length));
-    } else if (sign == "desc") {
-      setIdx((idx - 1 + deck.questions.length) % deck.questions.length);
-    }
+  const setIndex = () => {
+    setIdx(Math.min(idx + 1, deck.questions.length));
+  };
+
+  const handleWrongQuestion = (questionIdx) => {
+    const questionId = deck.questions[questionIdx].id;
+    setWrongQuestions((prev) => {
+      const newSet = new Set(prev);
+      newSet.add(questionId);
+      return newSet;
+    });
+    setDeck({ ...deck, questions: [...deck.questions, deck.questions[questionIdx]] });
   };
 
   const inCompletedSet = (questionIdx) => {
     return completeQuestions.has(questionIdx);
   };
 
-  console.log("Idx", idx);
-  console.log("deck", deck);
+  console.log(wrongQuestions);
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -73,6 +86,8 @@ function SpacedRep() {
           questionIdx={idx}
           inCompletedSet={inCompletedSet}
           setIndex={setIndex}
+          handleWrongQuestion={handleWrongQuestion}
+          wrongQuestions={wrongQuestions}
         />
       )}
 

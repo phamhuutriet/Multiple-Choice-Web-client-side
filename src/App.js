@@ -8,13 +8,13 @@ import DeckHome from "./components/Deck/DeckHome";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
 import { fetchAllDeck } from "./redux/actions/actions";
-import LearnDeckNoRedux from "./components/Deck/Learn/LearnDeckNoRedux";
 import LearnController from "./components/Deck/Learn/Controller/LearnController";
 import DeckInfo from "./components/Deck/DeckInfo/DeckInfo";
 import AllQuestion from "./components/Deck/DeckInfo/AllQuestion";
 import QuestionEdit from "./components/Deck/DeckInfo/QuestionEdit";
 import SpacedRep from "./components/Deck/Learn/SpacedRep";
 import Login from "./components/Authentication/Login";
+import SignUp from "./components/Authentication/SignUp";
 
 function App() {
   const userInfo = useSelector((state) => state.userInfo);
@@ -24,12 +24,11 @@ function App() {
     if (userInfo != null) dispatch(fetchAllDeck(userInfo.jwt, userInfo.userId));
   }, [userInfo]);
 
-  console.log(userInfo);
-
   return (
     <BrowserRouter>
       <div className="App">
         <Routes>
+          <Route path="/signUp" element={<SignUp />} />
           <Route
             path="/"
             element={

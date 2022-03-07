@@ -11,6 +11,8 @@ const createHeader = (jwt) => ({
   },
 });
 
+export const signUp = (signUpInfo) => axios.post(AUTH_URL + "/register", signUpInfo);
+
 export const fetchAllDeck = (jwt, userId) => axios.get(USER_URL + `/${userId}/decks`, createHeader(jwt));
 
 export const authenticate = (loginInfo) => axios.post(AUTH_URL, loginInfo);

@@ -18,7 +18,6 @@ export default (decks = [], action) => {
     case UPDATE_PRIORITY_SCORE:
       var updatedDeck = decks.find((deck) => deck.id == action.deckId);
       updatedDeck.questions = updatedDeck.questions.map((question) => (question.id == action.id ? action.payloads : question));
-      console.log("reducer ", updatedDeck.questions);
       return decks.map((deck) => (deck.id == action.deckId ? updatedDeck : deck));
     case UPDATE_DECK_REDUX:
       var deckId = action.payloads.deckId;
@@ -37,7 +36,6 @@ export default (decks = [], action) => {
     case DELETE_QUESTION:
       var updatedDeck = decks.find((deck) => deck.id == action.deckId);
       updatedDeck.questions = updatedDeck.questions.filter((question) => question.id != action.questionId);
-      console.log("delete in reducer: ", updatedDeck.questions);
       return decks.map((deck) => (deck.id == action.deckId ? updatedDeck : deck));
     case DELETE_DECK:
       return decks.filter((deck) => deck.id != action.deckId);

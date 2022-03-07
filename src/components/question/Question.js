@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updatePriorityScore } from "../../redux/actions/actions";
 import Choices from "./Choices";
 
-function Question({ question, deckId, setCompleteQuestions, questionIdx, inCompletedSet, setIndex }) {
+function Question({ question, deckId, setCompleteQuestions, questionIdx, inCompletedSet, setIndex, handleWrongQuestion, wrongQuestions }) {
   const jwt = useSelector((state) => state.userInfo).jwt;
   const [thisQuestion, setQuestion] = useState(question);
   const dispatch = useDispatch();
@@ -27,10 +27,8 @@ function Question({ question, deckId, setCompleteQuestions, questionIdx, inCompl
   };
 
   const dispatchPriority = (sign) => {
-    if (sign == "true") {
+    if (sign == "true" && !wrongQuestions.has(questionIdx)) {
       dispatch(updatePriorityScore(jwt, { ...thisQuestion, priorityScore: thisQuestion.priorityScore - 1 }, deckId));
-    } else {
-      dispatch(updatePriorityScore(jwt, { ...thisQuestion, priorityScore: Math.max(0, thisQuestion.priorityScore + 1) }, deckId));
     }
   };
 
@@ -45,6 +43,7 @@ function Question({ question, deckId, setCompleteQuestions, questionIdx, inCompl
         inCompletedSet={inCompletedSet}
         dispatchPriority={dispatchPriority}
         setIndex={setIndex}
+        handleWrongQuestion={handleWrongQuestion}
       />
     </div>
   );
