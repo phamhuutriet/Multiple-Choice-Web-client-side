@@ -10,6 +10,7 @@ import {
   LOG_OUT,
   UPDATE_PRIORITY_SCORE,
   UPDATE_QUESTION,
+  UPDATE_REDUX,
 } from "./actionTypes";
 
 export const fetchAllDeck = (jwt, userId) => async (dispatch) => {
@@ -18,12 +19,16 @@ export const fetchAllDeck = (jwt, userId) => async (dispatch) => {
     dispatch({ type: FETCH_ALL_DECKS, payloads: data });
   } catch (err) {
     console.log(err.message);
+    if (err.response.status == 403) {
+      dispatch({ type: LOG_OUT });
+    }
   }
 };
 
 export const updatePriorityScore = (jwt, updatedQuestion, deckId) => async (dispatch) => {
   try {
     const { data } = await api.updatePriorityScore(jwt, updatedQuestion);
+    console.log("update to server data ", data);
     dispatch({ type: UPDATE_PRIORITY_SCORE, payloads: data, id: data.id, deckId: deckId });
   } catch (err) {
     console.log(err.message);
@@ -96,4 +101,9 @@ export const authenticate = (logginInfo) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   dispatch({ type: LOG_OUT });
+};
+
+export const updateQuestionToRedux = (updatedQuestion, questionId, deckId) => async (dispatch) => {
+  console.log("dispatch update question to redux", updatedQuestion);
+  dispatch({ type: UPDATE_QUESTION, payloads: updatedQuestion, id: questionId, deckId: deckId });
 };

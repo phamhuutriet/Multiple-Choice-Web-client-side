@@ -26,25 +26,6 @@ function App() {
 
   console.log(userInfo);
 
-  if (userInfo == null) {
-    return (
-      <BrowserRouter>
-        <div className="App">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <div>
-                  <Login />
-                </div>
-              }
-            />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    );
-  }
-
   return (
     <BrowserRouter>
       <div className="App">
@@ -52,93 +33,153 @@ function App() {
           <Route
             path="/"
             element={
-              <div>
-                <NavBar></NavBar>
-                <Home />
-              </div>
+              userInfo != null ? (
+                <div>
+                  <NavBar></NavBar>
+                  <Home />
+                </div>
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )
             }
           />
           <Route
             path="/decks"
             element={
-              <div>
-                <NavBar />
-                <AllDeck />
-              </div>
+              userInfo != null ? (
+                <div>
+                  <NavBar />
+                  <AllDeck />
+                </div>
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )
             }
           />
           <Route
             path="/decks/:id/learn/:shuffleQuestions/:shuffleChoices/:sortByPriority"
             element={
-              <div>
-                <NavBar />
-                <LearnDeck />
-              </div>
+              userInfo != null ? (
+                <div>
+                  <NavBar />
+                  <LearnDeck />
+                </div>
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )
             }
           />
           <Route
             path="/decks/:id/learn/controller"
             element={
-              <div>
-                <NavBar />
-                <LearnController />
-              </div>
+              userInfo != null ? (
+                <div>
+                  <NavBar />
+                  <LearnController />
+                </div>
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )
             }
           />
           <Route
             path="/decks/:id"
             element={
-              <div>
-                <NavBar />
-                <div style={{ textAlign: "center" }}>
-                  <DeckHome />
+              userInfo != null ? (
+                <div>
+                  <NavBar />
+                  <div style={{ textAlign: "center" }}>
+                    <DeckHome />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )
             }
           />
           <Route
             path="/decks/:id/spacedRep"
             element={
-              <div>
-                <NavBar />
-                <SpacedRep />
-              </div>
+              userInfo != null ? (
+                <div>
+                  <NavBar />
+                  <SpacedRep />
+                </div>
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )
             }
           />
           <Route
             path="/decks/:id/deckinfo"
             element={
-              <div>
-                <NavBar />
-                <DeckInfo />
-              </div>
+              userInfo != null ? (
+                <div>
+                  <NavBar />
+                  <DeckInfo />
+                </div>
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )
             }
           />
           <Route
             path="/decks/:id/deckinfo/allQuestions"
             element={
-              <div>
-                <NavBar />
-                <AllQuestion />
-              </div>
+              userInfo != null ? (
+                <div>
+                  <NavBar />
+                  <AllQuestion />
+                </div>
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )
             }
           />
           <Route
             path="/decks/:id/deckinfo/allQuestions/:questionId/edit"
             element={
-              <div>
-                <NavBar />
-                <QuestionEdit />
-              </div>
+              userInfo != null ? (
+                <div>
+                  <NavBar />
+                  <QuestionEdit />
+                </div>
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )
             }
           />
           <Route
             path="/decks/:id/addCard"
             element={
-              <div>
-                <NavBar />
-                <AddQuestion />
-              </div>
+              userInfo != null ? (
+                <div>
+                  <NavBar />
+                  <AddQuestion />
+                </div>
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )
             }
           />
         </Routes>

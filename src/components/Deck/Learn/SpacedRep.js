@@ -5,24 +5,28 @@ import Question from "../../question/Question";
 import Button from "@mui/material/Button";
 
 const timeHandle = (str) => {
-  const times = str
-    .slice(0, 10)
-    .split("-")
-    .map((time) => parseInt(time));
-  const date = new Date(times[0], times[1] - 1, times[2]);
-  date.setDate(date.getDate() - 1);
+  // const times = str
+  //   .slice(0, 10)
+  //   .split("-")
+  //   .map((time) => parseInt(time));
+  // const date = new Date(times[0], times[1] - 1, times[2]);
+  // date.setDate(date.getDate());
+
+  var dateStr = JSON.parse('"' + str + '"');
+  var date = new Date(dateStr);
+  console.log("date", date);
   return date;
 };
 
 const createDeck = (fetchedDeck) => {
   const now = new Date();
-  console.log(fetchedDeck);
-  if (fetchedDeck != null) {
+  if (fetchedDeck != null && Object.keys(fetchedDeck).length != 0) {
     fetchedDeck.questions = fetchedDeck.questions
       .filter((question) => timeHandle(question.spacedRepetition).getTime() <= now.getTime())
       .sort((q1, q2) => q1.priorityScore - q2.priorityScore);
+    return fetchedDeck;
   }
-  return fetchedDeck != null ? fetchedDeck : null;
+  return null;
 };
 
 function SpacedRep() {
@@ -50,7 +54,8 @@ function SpacedRep() {
     return completeQuestions.has(questionIdx);
   };
 
-  console.log("deck is null ", deck == null);
+  console.log("Idx", idx);
+  console.log("deck", deck);
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -71,7 +76,7 @@ function SpacedRep() {
         />
       )}
 
-      {deck != null && idx == deck.questions.length ? (
+      {deck != null && idx >= deck.questions.length ? (
         <Button onClick={() => handleOnClick()} sx={{ mt: 1, mr: 1 }} variant="outlined">
           END TEST
         </Button>

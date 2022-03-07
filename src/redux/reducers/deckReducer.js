@@ -8,6 +8,7 @@ import {
   DELETE_QUESTION,
   DELETE_DECK,
   FETCH_DECK_QUESTION,
+  UPDATE_REDUX,
 } from "../actions/actionTypes";
 
 export default (decks = [], action) => {

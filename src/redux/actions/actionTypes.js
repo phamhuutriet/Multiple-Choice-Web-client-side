@@ -9,3 +9,4 @@ export const DELETE_DECK = "DELETE_DECK";
 export const FETCH_DECK_QUESTION = "FETCH_DECK_QUESTION";
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOG_OUT = "LOG_OUT";
+export const UPDATE_REDUX = "UPDATE_REDUX";
