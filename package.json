@@ -2,7 +2,7 @@
   "name": "client-side",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://phamhuutriet.github.io/multiplechoice",
+  "homepage": "https://phamhuutriet.github.io/Multiple-Choice-Web-client-side/",
   "dependencies": {
     "-": "^0.0.1",
     "@emotion/react": "^11.8.1",
@@ -31,7 +31,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -b master -d build"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
