@@ -25,7 +25,7 @@ function App() {
   }, [userInfo]);
 
   return (
-    <BrowserRouter basename="/multiplechoice">
+    <BrowserRouter basename="/Multiple-Choice-Web-client-side/">
       <div className="App">
         <Routes>
           <Route path="/signUp" element={<SignUp />} />

@@ -2,7 +2,7 @@
   "name": "client-side",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://phamhuutriet.github.io/multiplechoice",
+  "homepage": "https://phamhuutriet.github.io/Multiple-Choice-Web-client-side/",
   "dependencies": {
     "-": "^0.0.1",
     "@emotion/react": "^11.8.1",
