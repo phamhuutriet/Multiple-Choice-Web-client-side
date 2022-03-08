@@ -1,9 +1,12 @@
 import axios from "axios";
 
-const DECKS_URL = "http://localhost:8080/decks";
-const QUESTIONS_URL = "http://localhost:8080/questions";
-const USER_URL = "http://localhost:8080/user";
-const AUTH_URL = "http://localhost:8080/authenticate";
+const DEPLOY_URL = "https://multiple-choice-serverside.herokuapp.com";
+const LOCAL_HOST = "http://localhost:8080";
+
+const DECKS_URL = DEPLOY_URL + "/decks";
+const QUESTIONS_URL = DEPLOY_URL + "/questions";
+const USER_URL = DEPLOY_URL + "/user";
+const AUTH_URL = DEPLOY_URL + "/authenticate";
 
 const createHeader = (jwt) => ({
   headers: {
