@@ -18,7 +18,6 @@ function LearnDeck() {
 
   const handleOnClick = async () => {
     for (var questionId of wrongQuestions) {
-      console.log("iterate set ", questionId);
       const thisQuestion = deck.questions.find((question) => question.id == questionId);
       dispatch(updatePriorityScore(jwt, { ...thisQuestion, priorityScore: Math.max(0, thisQuestion.priorityScore + 1) }, id));
     }

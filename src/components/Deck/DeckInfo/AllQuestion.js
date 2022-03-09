@@ -6,10 +6,8 @@ import QuestionInfo from "./QuestionInfo";
 
 function AllQuestion() {
   const { id } = useParams();
-  const questions = useSelector((state) => {
-    const fetchedDeck = state.deck.find((deck) => deck.id == id);
-    return fetchedDeck != null ? fetchedDeck.questions : [];
-  });
+  const fetchedDeck = useSelector((state) => state.deck.find((deck) => deck.id == id));
+  const questions = fetchedDeck != null ? fetchedDeck.questions : [];
 
   return (
     <div>

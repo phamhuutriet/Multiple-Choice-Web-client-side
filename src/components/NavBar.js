@@ -40,10 +40,6 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
-  const navigateToURL = (url) => {
-    window.location.href = url;
-  };
-
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
@@ -95,7 +91,7 @@ const ResponsiveAppBar = () => {
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page, idx) => (
-              <Button key={page} onClick={() => navigateToURL(urls[idx])} sx={{ my: 2, color: "white", display: "block" }}>
+              <Button key={page} onClick={() => navigate(urls[idx])} sx={{ my: 2, color: "white", display: "block" }}>
                 {page}
               </Button>
             ))}

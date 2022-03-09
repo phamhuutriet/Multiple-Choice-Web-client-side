@@ -1,0 +1,11 @@
+export const HOME = "/Multiple-Choice-Web-client-side";
+export const SIGN_UP = HOME + "/signUp";
+export const ALL_DECKS = HOME + "/decks";
+export const LEARN_DECK = HOME + "/decks/:id/learn/:shuffleQuestions/:shuffleChoices/:sortByPriority";
+export const LEARN_CONTROLLER = HOME + "/decks/:id/learn/controller";
+export const DECK_HOME = HOME + "/decks/:id";
+export const SPACED_REP = HOME + "/decks/:id/spacedRep";
+export const DECK_INFO = HOME + "/decks/:id/deckinfo";
+export const ALL_QUESTION = HOME + "/decks/:id/deckinfo/allQuestions";
+export const QUESTION_EDIT = HOME + "/decks/:id/deckinfo/allQuestions/:questionId/edit";
+export const ADD_QUESTION = HOME + "/decks/:id/addCard";

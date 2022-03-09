@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import AddQuestion from "./components/Deck/AddDeck/AddQuestion";
 import AllDeck from "./components/Deck/AllDeck";
 import LearnDeck from "./components/Deck/Learn/LearnDeck";
@@ -24,8 +24,12 @@ function App() {
     if (userInfo != null) dispatch(fetchAllDeck(userInfo.jwt, userInfo.userId));
   }, [userInfo]);
 
+  useEffect(() => {
+    document.title = "Multiple Choice";
+  }, []);
+
   return (
-    <BrowserRouter basename="/Multiple-Choice-Web-client-side/">
+    <HashRouter>
       <div className="App">
         <Routes>
           <Route path="/signUp" element={<SignUp />} />
@@ -183,7 +187,7 @@ function App() {
           />
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

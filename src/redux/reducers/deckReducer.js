@@ -26,9 +26,7 @@ export default (decks = [], action) => {
     case CREATE_NEW_DECK:
       return [...decks, action.payloads];
     case ADD_QUESTION:
-      var updatedDeck = decks.find((deck) => deck.id == action.deckId);
-      updatedDeck.questions = [...updatedDeck.questions, action.payloads];
-      return decks.map((deck) => (deck.id == updatedDeck.id ? updatedDeck : deck));
+      return decks.map((deck) => (deck.id == action.deckId ? action.payloads : deck));
     case UPDATE_QUESTION:
       var updatedDeck = decks.find((deck) => deck.id == action.deckId);
       updatedDeck.questions = updatedDeck.questions.map((question) => (question.id == action.id ? action.payloads : question));
